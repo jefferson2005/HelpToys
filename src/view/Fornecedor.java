@@ -1,17 +1,36 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Iterator;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -19,25 +38,6 @@ import org.dom4j.io.SAXReader;
 
 import model.DAO;
 import utils.Validador;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
-import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JScrollPane;
-import javax.swing.JList;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.ImageIcon;
-import java.awt.Color;
-import java.awt.Toolkit;
-import java.awt.Cursor;
 
 public class Fornecedor extends JDialog {
 	
@@ -48,7 +48,6 @@ public class Fornecedor extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtID;
-	private JTextField txtFone;
 	private JTextField txtEmail;
 	private JTextField txtCep;
 	private JTextField txtEndereco;
@@ -70,6 +69,7 @@ public class Fornecedor extends JDialog {
 	private JTextField txtIE;
 	private JTextField txtSite;
 	private JTextField txtVendedor;
+	private JTextField txtFone;
 
 	/**
 	 * Launch the application.
@@ -235,24 +235,11 @@ public class Fornecedor extends JDialog {
 		txtID.setBounds(27, 31, 52, 20);
 		contentPanel.add(txtID);
 		txtID.setColumns(10);
-		
-		txtFone = new JTextField();
-		txtFone.setDocument(new Validador(16));
-		txtFone.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				String caracteres = "0123456789.";
-
-				if (!caracteres.contains(e.getKeyChar() + "")) {
-
-					e.consume();
-				}
-			}
-		});
-		txtFone.setBounds(27, 76, 103, 18);
-		contentPanel.add(txtFone);
-		txtFone.setColumns(10);
-		txtFone.setDocument(new Validador(15));
+		MaskFormatter msf = null;
+		try { msf = new MaskFormatter("(##)#####-####");			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		txtEmail = new JTextField();
 		txtEmail.setDocument(new Validador(50));
@@ -395,6 +382,18 @@ public class Fornecedor extends JDialog {
 		contentPanel.add(txtSite);
 		txtSite.setColumns(10);
 		txtSite.setDocument(new Validador(50));
+		
+		
+		MaskFormatter msf1 = null;
+		try { msf1 = new MaskFormatter("(##)#####-####");			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		txtFone = new JFormattedTextField(msf1);
+		txtFone = new JTextField();
+		txtFone.setBounds(24, 76, 86, 20);
+		contentPanel.add(txtFone);
+		txtFone.setColumns(10);
 	}
 	/**
 	 * buscarCep
@@ -607,10 +606,14 @@ public class Fornecedor extends JDialog {
 				JOptionPane.showMessageDialog(null, "Fornecedor adicionado!");  
 				limparCampos();
 				//fechar a conexão
-			} catch (Exception e) {
-				System.out.print(e);
+			}  catch (java.sql.SQLIntegrityConstraintViolationException e1) {
+				JOptionPane.showMessageDialog(null, "Usuário não adicionado.\nEste CNPJ já está sendo utilizado.");
+				txtCNPJ.setText(null);
+				txtCNPJ.requestFocus();
+			} catch (Exception e2) {
+				System.out.println(e2);
 			}
-			}
+		}
 	}
 	/*
 	 * 
@@ -666,19 +669,19 @@ public class Fornecedor extends JDialog {
 			JOptionPane.showMessageDialog(null, "Digite o numero do endereço");
 			txtNumero.requestFocus();
 		} else if (txtRazao.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Digite o numero do endereço");
+			JOptionPane.showMessageDialog(null, "Digite a razão social");
 			txtRazao.requestFocus();
 		} else if (txtFantasia.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Digite o numero do endereço");
+			JOptionPane.showMessageDialog(null, "Digite o nome fantasia");
 			txtFantasia.requestFocus();
 		} else if (txtIE.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Digite o numero do endereço");
+			JOptionPane.showMessageDialog(null, "Digite a inscrição estadual");
 			txtIE.requestFocus();
 		} else if (txtSite.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Digite o numero do endereço");
+			JOptionPane.showMessageDialog(null, "Digite o seu site");
 			txtSite.requestFocus();
 		} else if (txtVendedor.getText().isEmpty()) {
-			JOptionPane.showMessageDialog(null, "Digite o numero do endereço");
+			JOptionPane.showMessageDialog(null, "Digite o numero do vendedor");
 			txtVendedor.requestFocus();
 		} else {
 
@@ -717,7 +720,7 @@ public class Fornecedor extends JDialog {
 				con.close();
 
 			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "CNPJ já existente");
+				System.out.println(e);
 			}
 		}
 	}
