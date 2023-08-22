@@ -96,7 +96,7 @@ public class Usuarios extends JDialog {
 		contentPanel.add(scrollPaneUsers);
 		
 				listUsers = new JList();
-				scrollPaneUsers.setViewportView(listUsers);
+				scrollPaneUsers.setColumnHeaderView(listUsers);
 				listUsers.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent e) {

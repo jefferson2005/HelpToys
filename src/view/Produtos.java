@@ -39,6 +39,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -48,7 +49,6 @@ import com.toedter.calendar.JDateChooser;
 
 import model.DAO;
 import utils.Validador;
-import javax.swing.UIManager;
 
 public class Produtos extends JDialog {
 	DAO dao = new DAO();
@@ -73,7 +73,6 @@ public class Produtos extends JDialog {
 	private JList listFornecedor;
 	private JScrollPane scrollPaneFornecedor;
 	private JTextField txtIDFornecedor;
-	private JComboBox cboUN;
 	private JButton btnEditar;
 	private JButton btnAdicionar;
 	private JButton btnLimpar;
@@ -91,6 +90,10 @@ public class Produtos extends JDialog {
 	private JDateChooser dateValidade;
 	private JLabel lblPorcentagem;
 	private JButton btnPesquisar;
+	private JScrollPane scrollPaneProdutos;
+	private JPanel listFornecedores;
+	private JList listProdutos;
+	private JComboBox cboUN;
 
 	/**
 	 * Launch the application.
@@ -113,15 +116,36 @@ public class Produtos extends JDialog {
 		setTitle("Produtos");
 		setBounds(100, 100, 777, 490);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				scrollPaneProdutos.setVisible(false);
+
+			}
+		});
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+		
+		scrollPaneProdutos = new JScrollPane();
+		scrollPaneProdutos.setVisible(false);
+		scrollPaneProdutos.setBounds(12, 102, 299, 23);
+		contentPanel.add(scrollPaneProdutos);
+		
+		listProdutos = new JList();
+		listProdutos.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				buscarProdutoLista();
+			}
+		});
+		scrollPaneProdutos.setViewportView(listProdutos);
 
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "Fornecedor", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(501, 13, 233, 65);
-		contentPanel.add(panel);
-		panel.setLayout(null);
+		listFornecedores = new JPanel();
+		listFornecedores.setBorder(new TitledBorder(null, "Fornecedor", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		listFornecedores.setBounds(501, 13, 233, 65);
+		contentPanel.add(listFornecedores);
+		listFornecedores.setLayout(null);
 
 		txtFornecedor = new JTextField();
 		txtFornecedor.setDocument(new Validador(50));
@@ -132,16 +156,16 @@ public class Produtos extends JDialog {
 			}
 		});
 		txtFornecedor.setBounds(129, 19, 94, 17);
-		panel.add(txtFornecedor);
+		listFornecedores.add(txtFornecedor);
 		txtFornecedor.setColumns(10);
 
 		JLabel lblFornecedor = new JLabel("Nome Fornecedor:");
 		lblFornecedor.setBounds(10, 21, 114, 14);
-		panel.add(lblFornecedor);
+		listFornecedores.add(lblFornecedor);
 
 		JLabel lblIdFor = new JLabel("ID:");
 		lblIdFor.setBounds(10, 40, 46, 14);
-		panel.add(lblIdFor);
+		listFornecedores.add(lblIdFor);
 
 		txtIDFornecedor = new JTextField();
 		txtIDFornecedor.addKeyListener(new KeyAdapter() {
@@ -157,12 +181,12 @@ public class Produtos extends JDialog {
 		});
 		txtIDFornecedor.setEditable(false);
 		txtIDFornecedor.setBounds(33, 38, 46, 20);
-		panel.add(txtIDFornecedor);
+		listFornecedores.add(txtIDFornecedor);
 		txtIDFornecedor.setColumns(10);
 
 		scrollPaneFornecedor = new JScrollPane();
 		scrollPaneFornecedor.setBounds(129, 36, 94, 26);
-		panel.add(scrollPaneFornecedor);
+		listFornecedores.add(scrollPaneFornecedor);
 
 		listFornecedor = new JList();
 		scrollPaneFornecedor.setViewportView(listFornecedor);
@@ -238,9 +262,11 @@ public class Produtos extends JDialog {
 		}
 		{
 			txtProduto = new JTextField();
+			txtProduto.setDocument(new Validador(50));
 			txtProduto.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent e) {
+					listarProdutos();
 				}
 			});
 			txtProduto.setBounds(12, 84, 299, 20);
@@ -250,6 +276,7 @@ public class Produtos extends JDialog {
 		}
 		{
 			txtEstoque = new JTextField();
+			txtEstoque.setDocument(new Validador(7));
 			txtEstoque.setDocument(new Validador(5));
 			txtEstoque.addKeyListener(new KeyAdapter() {
 				@Override
@@ -355,11 +382,6 @@ public class Produtos extends JDialog {
 			contentPanel.add(btnEditar);
 		}
 
-		cboUN = new JComboBox();
-		cboUN.setModel(new DefaultComboBoxModel(new String[] { "UN", "CX ", "PC ", "KG", "M" }));
-		cboUN.setBounds(313, 238, 59, 20);
-		contentPanel.add(cboUN);
-
 		lblFoto = new JLabel("");
 		lblFoto.setIcon(new ImageIcon(Produtos.class.getResource("/img/Camera.png")));
 		lblFoto.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -377,6 +399,7 @@ public class Produtos extends JDialog {
 		contentPanel.add(btnCarregar);
 
 		txtBarcode = new JTextField();
+		txtBarcode.setDocument(new Validador(13));
 		txtBarcode.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
@@ -429,6 +452,7 @@ public class Produtos extends JDialog {
 		contentPanel.add(lblNewLabel_3);
 
 		txtFabricante = new JTextField();
+		txtFabricante.setDocument(new Validador(50));
 		txtFabricante.setBounds(12, 128, 142, 20);
 		contentPanel.add(txtFabricante);
 		txtFabricante.setColumns(10);
@@ -452,6 +476,18 @@ public class Produtos extends JDialog {
 		contentPanel.add(lblNewLabel_6);
 
 		txtLucro = new JTextField();
+		txtLucro.setDocument(new Validador(10));
+		txtLucro.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String caracteres = "0123456789.";
+
+				if (!caracteres.contains(e.getKeyChar() + "")) {
+
+					e.consume();
+				}
+			}
+		});
 		txtLucro.setBounds(12, 233, 61, 20);
 		contentPanel.add(txtLucro);
 		txtLucro.setColumns(10);
@@ -464,11 +500,16 @@ public class Produtos extends JDialog {
 		btnPesquisar = new JButton("Buscar");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				buscarProdutos();
+				buscarProdutos(); 
 			}
 		});
 		btnPesquisar.setBounds(361, 27, 89, 23);
 		contentPanel.add(btnPesquisar);
+		
+		cboUN = new JComboBox();
+		cboUN.setModel(new DefaultComboBoxModel(new String[] {" ", "UN", "CX ", "PC ", "KG", "M"}));
+		cboUN.setBounds(313, 241, 67, 30);
+		contentPanel.add(cboUN);
 
 
 		
@@ -560,6 +601,8 @@ public class Produtos extends JDialog {
 		btnAdicionar.setEnabled(true);
 		btnExcluir.setEnabled(false);
 		btnEditar.setEnabled(false);
+		txtFabricante.setText(null);
+		txtLucro.setText(null);
 	}
 
 	private void adicionar() {
@@ -583,7 +626,8 @@ public class Produtos extends JDialog {
 		} else if (txtFornecedor.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Preencha o fornecedor do produto");
 			txtFornecedor.requestFocus();
-
+		} else if (dateValidade.getDate()== null) {
+			JOptionPane.showMessageDialog(null, "Preencha o fornecedor do produto");
 		} else {
 
 			// lógica pricipal
@@ -876,5 +920,106 @@ public class Produtos extends JDialog {
 			}
 		
 	}
+		
+		private void listarProdutos() {
+			// System.out.println("Teste");
+			// a linha abaixo cria um objeto usando como referência um vetor dinâmico, este
+			// obejto irá temporariamente armazenar os dados
+			DefaultListModel<String> modelo = new DefaultListModel<>();
+			// setar o model (vetor na lista)
+			listProdutos.setModel(modelo);
+			// Query (instrução sql)
+			String readLista = "select* from produtos where produto like '" + txtProduto.getText() + "%'" + "order by produto";
+			try {
+				// abri conexão
+				con = dao.conectar();
+
+				pst = con.prepareStatement(readLista);
+
+				rs = pst.executeQuery();
+
+				// uso do while para trazer os usuários enquanto exisitr
+				while (rs.next()) {
+					// mostrar a lista
+					scrollPaneProdutos.setVisible(true);
+					// adicionar os usuarios no vetor -> lista
+					modelo.addElement(rs.getString(3));
+					// esconder a lista se nenhuma letra for digitada
+					if (txtProduto.getText().isEmpty()) {
+						scrollPaneProdutos.setVisible(false);
+					}
+				}
+				con.close();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		}
+		
+		/**
+		 * Método usado para buscar usuário pela lista
+		 */
+		private void buscarProdutoLista() {
+			// System.out.println("teste");
+			// variável que captura o indice da linha da lista
+			int linha = listProdutos.getSelectedIndex();
+			if (linha >= 0) {
+				// Query (instrução sql)
+				// limit (0,1) -> seleciona o indice 0 e 1 usuário da lista
+				String readListaUsuario = "select * from produtos where produto like '" + txtProduto.getText() + "%'"
+						+ "order by produto";
+				try {
+					con = dao.conectar();
+					pst = con.prepareStatement(readListaUsuario);
+					rs = pst.executeQuery();
+					if (rs.next()) {
+						// esconder a lista
+						scrollPaneProdutos.setVisible(false);
+						// setar campos
+						txtCodigo.setText(rs.getString(1));
+						txtBarcode.setText(rs.getString(2));
+						txtProduto.setText(rs.getString(3));
+						txtLote.setText(rs.getString(4));
+						txtDescricao.setText(rs.getString(5));
+						Blob blob = (Blob) rs.getBlob(6);
+						txtFabricante.setText(rs.getString(7));
+						dateEntrada.setDate(rs.getDate(8));
+						dateValidade.setDate(rs.getDate(9));
+						txtEstoque.setText(rs.getString(10));
+						txtEstoqueMin.setText(rs.getString(11));
+						cboUN.setSelectedItem(rs.getString(12));
+						txtLocal.setText(rs.getString(13));
+						txtCusto.setText(rs.getString(14));
+						txtLucro.setText(rs.getString(15));
+						txtIDFornecedor.setText(rs.getString(16));
+						
+						btnAdicionar.setEnabled(false);
+						btnEditar.setEnabled(true);
+						btnExcluir.setEnabled(true);
+						
+						byte[] img = blob.getBytes(1, (int) blob.length());
+						BufferedImage imagem = null;
+
+						try {
+							imagem = ImageIO.read(new ByteArrayInputStream(img));
+						} catch (Exception e) {
+							System.out.println(e);
+						}
+						ImageIcon icone = new ImageIcon(imagem);
+						Icon foto = new ImageIcon(icone.getImage().getScaledInstance(lblFoto.getWidth(),
+								lblFoto.getHeight(), Image.SCALE_SMOOTH));
+						lblFoto.setIcon(foto);
+					}
+					
+				
+
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+			} else {
+				// se não existir no banco um usuário da lista
+				scrollPaneProdutos.setVisible(false);
+			
+			}
+		}
 	}
 
