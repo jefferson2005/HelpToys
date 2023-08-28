@@ -78,7 +78,7 @@ public class Usuarios extends JDialog {
 	public Usuarios() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Usuarios.class.getResource("/img/users.png")));
 		setTitle("Usuarios");
-		setBounds(100, 100, 405, 300);
+		setBounds(100, 100, 800, 600);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.addMouseListener(new MouseAdapter() {
 			@Override

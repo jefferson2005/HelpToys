@@ -38,6 +38,7 @@ import org.dom4j.io.SAXReader;
 
 import model.DAO;
 import utils.Validador;
+import java.awt.Font;
 
 public class Fornecedor extends JDialog {
 	
@@ -90,7 +91,7 @@ public class Fornecedor extends JDialog {
 	public Fornecedor() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Fornecedor.class.getResource("/img/Fornecedor.png")));
 		setTitle("Fornecedor");
-		setBounds(100, 100, 570, 400);
+		setBounds(100, 100, 800, 600);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -104,7 +105,7 @@ public class Fornecedor extends JDialog {
 		
 		scrollPaneFornecedor = new JScrollPane();
 		scrollPaneFornecedor.setVisible(false);
-		scrollPaneFornecedor.setBounds(137, 50, 240, 30);
+		scrollPaneFornecedor.setBounds(167, 61, 240, 30);
 		contentPanel.add(scrollPaneFornecedor);
 		
 		listFornecedor = new JList();
@@ -125,7 +126,7 @@ public class Fornecedor extends JDialog {
 				Adicionar();
 			}
 		});
-		btnAdicionar.setBounds(62, 302, 48, 48);
+		btnAdicionar.setBounds(167, 502, 48, 48);
 		contentPanel.add(btnAdicionar);
 		
 		btnExcluir = new JButton("");
@@ -138,7 +139,7 @@ public class Fornecedor extends JDialog {
 				excluirFornecedor();
 			}
 		});
-		btnExcluir.setBounds(184, 302, 48, 48);
+		btnExcluir.setBounds(289, 502, 48, 48);
 		contentPanel.add(btnExcluir);
 		
 		btnEditar = new JButton("");
@@ -151,7 +152,7 @@ public class Fornecedor extends JDialog {
 				editarFornecedor();
 			}
 		});
-		btnEditar.setBounds(308, 302, 48, 48);
+		btnEditar.setBounds(413, 502, 48, 48);
 		contentPanel.add(btnEditar);
 		
 		btnLimpar = new JButton("");
@@ -163,60 +164,72 @@ public class Fornecedor extends JDialog {
 				limparCampos();
 			}
 		});
-		btnLimpar.setBounds(426, 302, 48, 48);
+		btnLimpar.setBounds(531, 502, 48, 48);
 		contentPanel.add(btnLimpar);
 		
 		JLabel lblID = new JLabel("ID:");
-		lblID.setBounds(27, 17, 37, 14);
+		lblID.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblID.setBounds(57, 21, 37, 14);
 		contentPanel.add(lblID);
 		
 		JLabel lblRazao = new JLabel("Razão Social:");
-		lblRazao.setBounds(137, 17, 90, 14);
+		lblRazao.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblRazao.setBounds(167, 21, 90, 14);
 		contentPanel.add(lblRazao);
 		
 		JLabel lblFone = new JLabel("Telefone:");
-		lblFone.setBounds(27, 62, 62, 14);
+		lblFone.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblFone.setBounds(54, 86, 62, 14);
 		contentPanel.add(lblFone);
 		
 		JLabel lblEmail = new JLabel("E-mail:");
-		lblEmail.setBounds(147, 62, 68, 14);
+		lblEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblEmail.setBounds(213, 90, 68, 14);
 		contentPanel.add(lblEmail);
 		
 		JLabel lblCNPJ = new JLabel("CNPJ:");
-		lblCNPJ.setBounds(408, 17, 46, 14);
+		lblCNPJ.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCNPJ.setBounds(438, 21, 46, 14);
 		contentPanel.add(lblCNPJ);
 		
 		JLabel lblCep = new JLabel("CEP:");
-		lblCep.setBounds(348, 62, 46, 14);
+		lblCep.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCep.setBounds(439, 87, 46, 14);
 		contentPanel.add(lblCep);
 		
 		JLabel lblEndereco = new JLabel("Endereço:");
-		lblEndereco.setBounds(27, 114, 62, 14);
+		lblEndereco.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblEndereco.setBounds(57, 233, 95, 14);
 		contentPanel.add(lblEndereco);
 		
 		JLabel lblNumero = new JLabel("Nº:");
-		lblNumero.setBounds(276, 114, 46, 14);
+		lblNumero.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNumero.setBounds(367, 233, 46, 14);
 		contentPanel.add(lblNumero);
 		
 		JLabel lblComplemento = new JLabel("Complemento:");
-		lblComplemento.setBounds(348, 114, 95, 14);
+		lblComplemento.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblComplemento.setBounds(471, 230, 95, 14);
 		contentPanel.add(lblComplemento);
 		
 		JLabel lblBairro = new JLabel("Bairro:");
-		lblBairro.setBounds(27, 162, 62, 14);
+		lblBairro.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblBairro.setBounds(57, 319, 62, 14);
 		contentPanel.add(lblBairro);
 		
 		JLabel lblCidade = new JLabel("Cidade:");
-		lblCidade.setBounds(182, 162, 95, 14);
+		lblCidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCidade.setBounds(279, 319, 95, 14);
 		contentPanel.add(lblCidade);
 		
 		JLabel lblUF = new JLabel("UF:");
-		lblUF.setBounds(358, 162, 46, 14);
+		lblUF.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblUF.setBounds(521, 320, 46, 14);
 		contentPanel.add(lblUF);
 		
 		cboUF = new JComboBox();
 		cboUF.setModel(new DefaultComboBoxModel(new String[] {"", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"}));
-		cboUF.setBounds(358, 176, 62, 23);
+		cboUF.setBounds(517, 335, 62, 30);
 		contentPanel.add(cboUF);
 		
 		txtID = new JTextField();
@@ -232,7 +245,7 @@ public class Fornecedor extends JDialog {
 			}
 		});
 		txtID.setEditable(false);
-		txtID.setBounds(27, 31, 52, 20);
+		txtID.setBounds(57, 35, 59, 30);
 		contentPanel.add(txtID);
 		txtID.setColumns(10);
 		MaskFormatter msf = null;
@@ -243,7 +256,7 @@ public class Fornecedor extends JDialog {
 		
 		txtEmail = new JTextField();
 		txtEmail.setDocument(new Validador(50));
-		txtEmail.setBounds(147, 76, 179, 20);
+		txtEmail.setBounds(213, 111, 198, 27);
 		contentPanel.add(txtEmail);
 		txtEmail.setColumns(10);
 		txtEmail.setDocument(new Validador(30));
@@ -261,28 +274,28 @@ public class Fornecedor extends JDialog {
 				}
 			}
 		});
-		txtCep.setBounds(348, 75, 86, 20);
+		txtCep.setBounds(439, 110, 86, 28);
 		contentPanel.add(txtCep);
 		txtCep.setColumns(10);
 		
 		txtEndereco = new JTextField();
-		txtEndereco.setBounds(27, 129, 223, 20);
+		txtEndereco.setBounds(57, 248, 256, 28);
 		contentPanel.add(txtEndereco);
 		txtEndereco.setColumns(10);
 		
 		txtComplemento = new JTextField();
-		txtComplemento.setBounds(348, 127, 171, 20);
+		txtComplemento.setBounds(471, 246, 202, 30);
 		contentPanel.add(txtComplemento);
 		txtComplemento.setColumns(10);
 		
 		txtBairro = new JTextField();
-		txtBairro.setBounds(27, 176, 132, 20);
+		txtBairro.setBounds(57, 333, 179, 30);
 		contentPanel.add(txtBairro);
 		txtBairro.setColumns(10);
 		
 		txtCidade = new JTextField();
 		txtCidade.setColumns(10);
-		txtCidade.setBounds(182, 177, 134, 20);
+		txtCidade.setBounds(279, 334, 189, 29);
 		contentPanel.add(txtCidade);
 		
 		txtNumero = new JTextField();
@@ -290,7 +303,7 @@ public class Fornecedor extends JDialog {
 		txtNumero.addKeyListener(new KeyAdapter() {
 			
 		});
-		txtNumero.setBounds(276, 129, 49, 20);
+		txtNumero.setBounds(367, 248, 49, 28);
 		contentPanel.add(txtNumero);
 		txtNumero.setColumns(10);
 		
@@ -301,7 +314,7 @@ public class Fornecedor extends JDialog {
 				buscarCep();
 			}
 		});
-		btnBuscarCep.setBounds(460, 62, 48, 48);
+		btnBuscarCep.setBounds(538, 92, 48, 48);
 		contentPanel.add(btnBuscarCep);
 		
 		getRootPane().setDefaultButton(btnBuscarCep);
@@ -314,7 +327,7 @@ public class Fornecedor extends JDialog {
 				listarFornecedor();
 			}
 		});
-		txtRazao.setBounds(137, 32, 240, 19);
+		txtRazao.setBounds(167, 36, 240, 30);
 		contentPanel.add(txtRazao);
 		txtRazao.setColumns(10);
 		txtRazao.setDocument(new Validador(50));
@@ -332,7 +345,7 @@ public class Fornecedor extends JDialog {
 				}
 			}
 		});
-		txtCNPJ.setBounds(408, 32, 111, 20);
+		txtCNPJ.setBounds(438, 36, 111, 27);
 		contentPanel.add(txtCNPJ);
 		txtCNPJ.setColumns(10);
 		txtCNPJ.setDocument(new Validador(15));
@@ -340,45 +353,49 @@ public class Fornecedor extends JDialog {
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setOpaque(true);
 		lblNewLabel.setBackground(new Color(255, 128, 192));
-		lblNewLabel.setBounds(0, 292, 689, 69);
+		lblNewLabel.setBounds(0, 483, 784, 78);
 		contentPanel.add(lblNewLabel);
 		
 		JLabel lblFantasia = new JLabel("Nome Fantasia:");
-		lblFantasia.setBounds(27, 208, 90, 14);
+		lblFantasia.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblFantasia.setBounds(57, 404, 132, 14);
 		contentPanel.add(lblFantasia);
 		
 		txtFantasia = new JTextField();
-		txtFantasia.setBounds(27, 224, 132, 20);
+		txtFantasia.setBounds(57, 420, 179, 30);
 		contentPanel.add(txtFantasia);
 		txtFantasia.setColumns(10);
 		txtFantasia.setDocument(new Validador(50));
 		
 		JLabel lblVendedor = new JLabel("Vendedor:");
-		lblVendedor.setBounds(186, 207, 113, 14);
+		lblVendedor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblVendedor.setBounds(279, 403, 113, 14);
 		contentPanel.add(lblVendedor);
 		
 		txtVendedor = new JTextField();
-		txtVendedor.setBounds(183, 223, 143, 20);
+		txtVendedor.setBounds(276, 419, 189, 31);
 		contentPanel.add(txtVendedor);
 		txtVendedor.setColumns(10);
 		txtVendedor.setDocument(new Validador(20));
 		
 		JLabel lblIE = new JLabel("Inscrição Estadual:");
-		lblIE.setBounds(358, 210, 116, 14);
+		lblIE.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblIE.setBounds(500, 404, 116, 14);
 		contentPanel.add(lblIE);
 		
 		txtIE = new JTextField();
-		txtIE.setBounds(357, 224, 117, 20);
+		txtIE.setBounds(499, 420, 165, 30);
 		contentPanel.add(txtIE);
 		txtIE.setColumns(10);
 		txtIE.setDocument(new Validador(20));
 		
 		JLabel lblSite = new JLabel("Site:");
-		lblSite.setBounds(449, 162, 46, 14);
+		lblSite.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblSite.setBounds(57, 165, 46, 14);
 		contentPanel.add(lblSite);
 		
 		txtSite = new JTextField();
-		txtSite.setBounds(449, 177, 86, 20);
+		txtSite.setBounds(57, 180, 504, 29);
 		contentPanel.add(txtSite);
 		txtSite.setColumns(10);
 		txtSite.setDocument(new Validador(50));
@@ -391,7 +408,7 @@ public class Fornecedor extends JDialog {
 		}
 		txtFone = new JFormattedTextField(msf1);
 		txtFone = new JTextField();
-		txtFone.setBounds(24, 76, 86, 20);
+		txtFone.setBounds(54, 111, 130, 27);
 		contentPanel.add(txtFone);
 		txtFone.setColumns(10);
 	}

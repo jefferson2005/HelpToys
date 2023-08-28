@@ -113,7 +113,7 @@ public class Principal extends JFrame {
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/img/993813_matreshka_matrioshka_mother_open_souvenir_icon.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 640, 480);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -134,18 +134,18 @@ public class Principal extends JFrame {
 		});
 		
 		JLabel lblNewLabel_2 = new JLabel("Usuário:");
-		lblNewLabel_2.setBounds(6, 382, 86, 14);
+		lblNewLabel_2.setBounds(4, 499, 86, 14);
 		contentPane.add(lblNewLabel_2);
 		
 		lblUsuario = new JLabel("");
-		lblUsuario.setBounds(60, 382, 224, 14);
+		lblUsuario.setBounds(56, 499, 224, 14);
 		contentPane.add(lblUsuario);
 		
 		lblData = new JLabel("New label");
 		lblData.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblData.setBounds(6, 407, 437, 26);
+		lblData.setBounds(4, 524, 437, 26);
 		contentPane.add(lblData);
-		lblStatus.setBounds(550, 360, 74, 91);
+		lblStatus.setBounds(710, 480, 74, 91);
 		lblStatus.setIcon(new ImageIcon(Principal.class.getResource("/img/2124505_app_data_essential_ui_icon.png")));
 		lblStatus.setToolTipText("DBon");
 		contentPane.add(lblStatus);
@@ -163,7 +163,7 @@ public class Principal extends JFrame {
 		bntUsuarios.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		bntUsuarios.setIcon(new ImageIcon(Principal.class.getResource("/img/usuarios (2).png")));
 		bntUsuarios.setToolTipText("Usuários");
-		bntUsuarios.setBounds(447, 80, 64, 64);
+		bntUsuarios.setBounds(554, 127, 64, 64);
 		contentPane.add(bntUsuarios);
 		
 		JButton bntSobre = new JButton("");
@@ -179,23 +179,23 @@ public class Principal extends JFrame {
 		});
 		bntSobre.setIcon(new ImageIcon(Principal.class.getResource("/img/about.png")));
 		bntSobre.setToolTipText("Sobre");
-		bntSobre.setBounds(566, 11, 48, 48);
+		bntSobre.setBounds(726, 11, 48, 48);
 		contentPane.add(bntSobre);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(Principal.class.getResource("/img/Hospital.png")));
-		lblNewLabel.setBounds(230, 11, 133, 122);
+		lblNewLabel.setBounds(308, 11, 133, 122);
 		contentPane.add(lblNewLabel);
 		
 		lblRodape = new JLabel("");
 		lblRodape.setOpaque(true);
 		lblRodape.setBackground(new Color(255, 128, 192));
-		lblRodape.setBounds(0, 360, 624, 81);
+		lblRodape.setBounds(0, 480, 784, 81);
 		contentPane.add(lblRodape);
 		
 		JLabel lblNomeEmpresa = new JLabel("Toys Help");
 		lblNomeEmpresa.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 18));
-		lblNomeEmpresa.setBounds(252, 140, 92, 26);
+		lblNomeEmpresa.setBounds(330, 140, 92, 26);
 		contentPane.add(lblNomeEmpresa);
 		
 		JButton btnClientes = new JButton("");
@@ -209,7 +209,7 @@ public class Principal extends JFrame {
 		btnClientes.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnClientes.setToolTipText("Clientes");
 		btnClientes.setIcon(new ImageIcon(Principal.class.getResource("/img/User.png")));
-		btnClientes.setBounds(78, 80, 64, 64);
+		btnClientes.setBounds(112, 127, 64, 64);
 		contentPane.add(btnClientes);
 		
 		JButton btnOrdemSRV = new JButton("");
@@ -223,7 +223,7 @@ public class Principal extends JFrame {
 		btnOrdemSRV.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnOrdemSRV.setIcon(new ImageIcon(Principal.class.getResource("/img/OrdemSRV.png")));
 		btnOrdemSRV.setToolTipText("Ordem de Serviço");
-		btnOrdemSRV.setBounds(159, 186, 64, 64);
+		btnOrdemSRV.setBounds(186, 233, 64, 64);
 		contentPane.add(btnOrdemSRV);
 		
 		btnRelatorio = new JButton("");
@@ -238,7 +238,7 @@ public class Principal extends JFrame {
 		});
 		btnRelatorio.setIcon(new ImageIcon(Principal.class.getResource("/img/Relatorio (2).png")));
 		btnRelatorio.setToolTipText("Relátorio");
-		btnRelatorio.setBounds(364, 186, 64, 64);
+		btnRelatorio.setBounds(481, 233, 64, 64);
 		contentPane.add(btnRelatorio);
 		
 		btnProdutos = new JButton("");
@@ -252,7 +252,7 @@ public class Principal extends JFrame {
 		btnProdutos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnProdutos.setIcon(new ImageIcon(Principal.class.getResource("/img/Produtos.png")));
 		btnProdutos.setContentAreaFilled(false);
-		btnProdutos.setBounds(78, 285, 64, 64);
+		btnProdutos.setBounds(112, 332, 64, 64);
 		contentPane.add(btnProdutos);
 		
 		JButton btnFornecedor = new JButton("");
@@ -266,7 +266,7 @@ public class Principal extends JFrame {
 				fornecedor.setVisible(true);
 			}
 		});
-		btnFornecedor.setBounds(447, 285, 64, 64);
+		btnFornecedor.setBounds(564, 332, 64, 64);
 		contentPane.add(btnFornecedor);
 	}
 }

@@ -31,6 +31,7 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Toolkit;
+import javax.swing.JTextField;
 
 public class Relatorios extends JDialog {
 	
@@ -62,8 +63,9 @@ public class Relatorios extends JDialog {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Relatorios.class.getResource("/img/hospital2.png")));
 		setTitle("Relatórios");
 		setModal(true);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 800, 600);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(new Color(255, 255, 255));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -77,7 +79,35 @@ public class Relatorios extends JDialog {
 				relatorioClientes();
 			}
 		});
-		btnClientes.setBounds(51, 40, 128, 128);
+		
+		JButton btnNewButton = new JButton("");
+		btnNewButton.setIcon(new ImageIcon(Relatorios.class.getResource("/img2/Money.png")));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 VendaPatrimonio();
+			}
+		});
+		
+		JButton btnNewButton_1 = new JButton("");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VendaPatrimonio();
+			}
+		});
+		btnNewButton_1.setIcon(new ImageIcon(Relatorios.class.getResource("/img2/Carrinho.png")));
+		btnNewButton_1.setBounds(345, 497, 48, 48);
+		contentPanel.add(btnNewButton_1);
+		
+		JLabel lblNewLabel_1 = new JLabel("Venda Patrimônio:");
+		lblNewLabel_1.setBounds(234, 515, 110, 14);
+		contentPanel.add(lblNewLabel_1);
+		btnNewButton.setBounds(135, 497, 48, 48);
+		contentPanel.add(btnNewButton);
+		
+		JLabel lbl = new JLabel("Custo Patrimônio:");
+		lbl.setBounds(22, 515, 110, 14);
+		contentPanel.add(lbl);
+		btnClientes.setBounds(105, 80, 128, 128);
 		contentPanel.add(btnClientes);
 		
 		JButton btnServicos = new JButton("");
@@ -89,14 +119,26 @@ public class Relatorios extends JDialog {
 				relatorioServicos();
 			}
 		});
-		btnServicos.setBounds(253, 40, 128, 128);
+		btnServicos.setBounds(507, 80, 128, 128);
 		contentPanel.add(btnServicos);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setBackground(new Color(255, 128, 192));
 		lblNewLabel.setOpaque(true);
-		lblNewLabel.setBounds(0, 197, 434, 64);
+		lblNewLabel.setBounds(0, 476, 784, 85);
 		contentPanel.add(lblNewLabel);
+		
+		JButton btnRepor = new JButton("");
+		btnRepor.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnRepor.setIcon(new ImageIcon(Relatorios.class.getResource("/img2/Repor.png")));
+		btnRepor.setToolTipText("Repor");
+		btnRepor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Repor();
+			}
+		});
+		btnRepor.setBounds(294, 256, 128, 128);
+		contentPanel.add(btnRepor);
 	}//Fim do construtor
 	
 	
@@ -235,7 +277,213 @@ public class Relatorios extends JDialog {
 		//Abrir o desktop do sistema operacional e usar o leitor padrão
 		//de pdf para exibir o documento
 		try {
-			Desktop.getDesktop().open(new File("servicos.pdf"));
+			Desktop.getDesktop().open(new File("produtos.pdf"));
+		} catch (Exception e) {
+			System.out.println(e);
+		}		
+	}
+	private void Repor() {
+		//instanciar um objeto para construir a página pdf
+		Document document = new Document();
+		//configurar como A4 e modo paisagem
+		document.setPageSize(PageSize.A4.rotate());
+		//gerar o documento pdf
+		try {
+			//criar um documento em branco (pdf) de nome clientes.pdf
+			PdfWriter.getInstance(document, new FileOutputStream("produtos.pdf"));
+			//abrir o documento (formatar e inserir o conteúdo)
+			document.open();
+			//adicionar a data atual
+			Date dataRelatorio = new Date();
+			DateFormat formatador = DateFormat.getDateInstance(DateFormat.FULL);
+			document.add(new Paragraph(formatador.format(dataRelatorio)));
+			//adicionar um páragrafo
+			document.add(new Paragraph("Produtos:"));
+			document.add(new Paragraph("")); //pular uma linha
+			//----------------------------------------------------------
+			//query (instrução sql para gerar o relatório de clientes)
+			String readProdutos = "select codigo as código,produto,date_format(dataval, '%d/%m/%Y') as validade,\n"
+					+ "date_format(dataent, '%d/%m/%Y') as entrada,\n"
+					+ "estoque, estoquemin as estoque_mínimo \n"
+					+ "from produtos where dataval < dataent";
+			try {
+				//abrir a conexão com o banco
+				con = dao.conectar();
+				//preparar a query (executar a instrução sql)
+				pst = con.prepareStatement(readProdutos);
+				//obter o resultado (trazer do banco de dados)
+				rs = pst.executeQuery();
+				//atenção uso do while para trazer todos os clientes
+				// Criar uma tabela de duas colunas usando o framework(itextPDF)
+				PdfPTable tabela = new PdfPTable(6); //(2) número de colunas
+				// Criar o cabeçalho da tabela
+				PdfPCell col1 = new PdfPCell(new Paragraph("OS"));
+				PdfPCell col2 = new PdfPCell(new Paragraph("Produto"));
+				PdfPCell col3 = new PdfPCell(new Paragraph("Validade"));
+				PdfPCell col4 = new PdfPCell(new Paragraph("Entrada"));
+				PdfPCell col5 = new PdfPCell(new Paragraph("Estoque"));
+				PdfPCell col6 = new PdfPCell(new Paragraph("Estoque min"));
+				
+				tabela.addCell(col1);
+				tabela.addCell(col2);
+				tabela.addCell(col3);
+				tabela.addCell(col4);
+				tabela.addCell(col5);
+				tabela.addCell(col6);	
+				
+				while (rs.next()) {
+					//popular a tabela
+					tabela.addCell(rs.getString(1));
+					tabela.addCell(rs.getString(2));
+					tabela.addCell(rs.getString(3));
+					tabela.addCell(rs.getString(4));
+					tabela.addCell(rs.getString(5));
+					tabela.addCell(rs.getString(6));
+				}				
+				//adicionar a tabela ao documento pdf
+				document.add(tabela);
+				//fechar a conexão com o banco
+				con.close();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		//fechar o documento (pronto para "impressão" (exibir o pdf))
+		document.close();
+		//Abrir o desktop do sistema operacional e usar o leitor padrão
+		//de pdf para exibir o documento
+		try {
+			Desktop.getDesktop().open(new File("produtos.pdf"));
+		} catch (Exception e) {
+			System.out.println(e);
+		}		
+	}
+	
+	private void CustoPatrimonio() {
+		//instanciar um objeto para construir a página pdf
+		Document document = new Document();
+		//configurar como A4 e modo paisagem
+		document.setPageSize(PageSize.A4.rotate());
+		//gerar o documento pdf
+		try {
+			//criar um documento em branco (pdf) de nome clientes.pdf
+			PdfWriter.getInstance(document, new FileOutputStream("patrimonio.pdf"));
+			//abrir o documento (formatar e inserir o conteúdo)
+			document.open();
+			//adicionar a data atual
+			Date dataRelatorio = new Date();
+			DateFormat formatador = DateFormat.getDateInstance(DateFormat.FULL);
+			document.add(new Paragraph(formatador.format(dataRelatorio)));
+			//adicionar um páragrafo
+			document.add(new Paragraph("Patrímônio:"));
+			document.add(new Paragraph("")); //pular uma linha
+			//----------------------------------------------------------
+			//query (instrução sql para gerar o relatório de clientes)
+			String readPatrimonio = "select sum(custo * estoque) as Total from produtos;";
+			try {
+				//abrir a conexão com o banco
+				con = dao.conectar();
+				//preparar a query (executar a instrução sql)
+				pst = con.prepareStatement(readPatrimonio);
+				//obter o resultado (trazer do banco de dados)
+				rs = pst.executeQuery();
+				//atenção uso do while para trazer todos os clientes
+				// Criar uma tabela de duas colunas usando o framework(itextPDF)
+				PdfPTable tabela = new PdfPTable(1); //(2) número de colunas
+				// Criar o cabeçalho da tabela
+				PdfPCell col1 = new PdfPCell(new Paragraph("Patrímônio"));
+			
+				
+				tabela.addCell(col1);
+			
+				
+				while (rs.next()) {
+					//popular a tabela
+					tabela.addCell(rs.getString(1));
+					
+				}				
+				//adicionar a tabela ao documento pdf
+				document.add(tabela);
+				//fechar a conexão com o banco
+				con.close();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		//fechar o documento (pronto para "impressão" (exibir o pdf))
+		document.close();
+		//Abrir o desktop do sistema operacional e usar o leitor padrão
+		//de pdf para exibir o documento
+		try {
+			Desktop.getDesktop().open(new File("patrimonio.pdf"));
+		} catch (Exception e) {
+			System.out.println(e);
+		}		
+	}
+	
+	private void VendaPatrimonio() {
+		//instanciar um objeto para construir a página pdf
+		Document document = new Document();
+		//configurar como A4 e modo paisagem
+		document.setPageSize(PageSize.A4.rotate());
+		//gerar o documento pdf
+		try {
+			//criar um documento em branco (pdf) de nome clientes.pdf
+			PdfWriter.getInstance(document, new FileOutputStream("patrimonio.pdf"));
+			//abrir o documento (formatar e inserir o conteúdo)
+			document.open();
+			//adicionar a data atual
+			Date dataRelatorio = new Date();
+			DateFormat formatador = DateFormat.getDateInstance(DateFormat.FULL);
+			document.add(new Paragraph(formatador.format(dataRelatorio)));
+			//adicionar um páragrafo
+			document.add(new Paragraph("Patrímônio:"));
+			document.add(new Paragraph("")); //pular uma linha
+			//----------------------------------------------------------
+			//query (instrução sql para gerar o relatório de clientes)
+			String readPatrimonio = "select sum((custo +(custo * lucro)/100) * estoque) as total from produtos;";
+			try {
+				//abrir a conexão com o banco
+				con = dao.conectar();
+				//preparar a query (executar a instrução sql)
+				pst = con.prepareStatement(readPatrimonio);
+				//obter o resultado (trazer do banco de dados)
+				rs = pst.executeQuery();
+				//atenção uso do while para trazer todos os clientes
+				// Criar uma tabela de duas colunas usando o framework(itextPDF)
+				PdfPTable tabela = new PdfPTable(1); //(2) número de colunas
+				// Criar o cabeçalho da tabela
+				PdfPCell col1 = new PdfPCell(new Paragraph("Patrímônio"));
+			
+				
+				tabela.addCell(col1);
+			
+				
+				while (rs.next()) {
+					//popular a tabela
+					tabela.addCell(rs.getString(1));
+					
+				}				
+				//adicionar a tabela ao documento pdf
+				document.add(tabela);
+				//fechar a conexão com o banco
+				con.close();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		//fechar o documento (pronto para "impressão" (exibir o pdf))
+		document.close();
+		//Abrir o desktop do sistema operacional e usar o leitor padrão
+		//de pdf para exibir o documento
+		try {
+			Desktop.getDesktop().open(new File("patrimonio.pdf"));
 		} catch (Exception e) {
 			System.out.println(e);
 		}		
