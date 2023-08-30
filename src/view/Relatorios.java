@@ -124,12 +124,6 @@ public class Relatorios extends JDialog {
 		btnServicos.setBounds(494, 80, 128, 128);
 		contentPanel.add(btnServicos);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBackground(new Color(255, 128, 192));
-		lblNewLabel.setOpaque(true);
-		lblNewLabel.setBounds(0, 476, 784, 85);
-		contentPanel.add(lblNewLabel);
-		
 		JButton btnRepor = new JButton("");
 		btnRepor.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnRepor.setIcon(new ImageIcon(Relatorios.class.getResource("/img2/Repor.png")));
@@ -153,6 +147,12 @@ public class Relatorios extends JDialog {
 		btnFornecedores.setToolTipText("Fornecedores");
 		btnFornecedores.setBounds(172, 255, 128, 128);
 		contentPanel.add(btnFornecedores);
+		
+		JLabel lblNewLabel_3 = new JLabel("\r\n");
+		lblNewLabel_3.setOpaque(true);
+		lblNewLabel_3.setBackground(new Color(255, 128, 255));
+		lblNewLabel_3.setBounds(-1, 485, 784, 75);
+		contentPanel.add(lblNewLabel_3);
 	}//Fim do construtor
 	
 	
@@ -195,7 +195,7 @@ public class Relatorios extends JDialog {
 				tabela.addCell(col2);
 				tabela.addCell(col3);
 			
-			
+				
 				while (rs.next()) {
 					//popular a tabela
 					tabela.addCell(rs.getString(1));

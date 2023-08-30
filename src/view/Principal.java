@@ -189,7 +189,7 @@ public class Principal extends JFrame {
 		
 		lblRodape = new JLabel("");
 		lblRodape.setOpaque(true);
-		lblRodape.setBackground(new Color(255, 128, 192));
+		lblRodape.setBackground(new Color(255, 128, 255));
 		lblRodape.setBounds(0, 480, 784, 81);
 		contentPane.add(lblRodape);
 		

@@ -80,7 +80,6 @@ public class Produtos extends JDialog {
 	private JLabel lblFoto;
 	private JButton btnCarregar;
 	private JTextField txtBarcode;
-	private JLabel lblNewLabel;
 	private JTextArea txtDescricao;
 	private JTextField txtFabricante;
 	private JTextField txtLote;
@@ -94,6 +93,7 @@ public class Produtos extends JDialog {
 	private JPanel listFornecedores;
 	private JList listProdutos;
 	private JComboBox cboUN;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -417,13 +417,6 @@ public class Produtos extends JDialog {
 		contentPanel.add(txtBarcode);
 		txtBarcode.setColumns(10);
 		{
-			lblNewLabel = new JLabel("");
-			lblNewLabel.setOpaque(true);
-			lblNewLabel.setBackground(new Color(255, 128, 192));
-			lblNewLabel.setBounds(0, 479, 784, 82);
-			contentPanel.add(lblNewLabel);
-		}
-		{
 			txtDescricao = new JTextArea();
 			txtDescricao.setBorder(UIManager.getBorder("FileChooser.listViewBorder"));
 			txtDescricao.setBackground(new Color(255, 255, 255));
@@ -510,6 +503,12 @@ public class Produtos extends JDialog {
 		cboUN.setModel(new DefaultComboBoxModel(new String[] {" ", "UN", "CX ", "PC ", "KG", "M"}));
 		cboUN.setBounds(313, 304, 67, 30);
 		contentPanel.add(cboUN);
+		
+		lblNewLabel = new JLabel("\r\n");
+		lblNewLabel.setOpaque(true);
+		lblNewLabel.setBackground(new Color(255, 128, 255));
+		lblNewLabel.setBounds(1, 485, 784, 75);
+		contentPanel.add(lblNewLabel);
 
 
 		

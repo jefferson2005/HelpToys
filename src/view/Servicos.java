@@ -41,6 +41,9 @@ import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Toolkit;
 import java.awt.Font;
+import javax.swing.JTextArea;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
 
 public class Servicos extends JDialog {
 	
@@ -69,6 +72,9 @@ public class Servicos extends JDialog {
 	private JLabel lblNewLabel;
 	private JTextField txtValor;
 	private JButton btnOS;
+	private JTextArea txtDescricao;
+	private JLabel lblNewLabel_1;
+	private JTextField txtAtendente;
 
 	/**
 	 * Launch the application.
@@ -91,6 +97,7 @@ public class Servicos extends JDialog {
 	 * Create the dialog.
 	 */
 	public Servicos() {
+		getContentPane().setBackground(new Color(255, 255, 255));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Servicos.class.getResource("/img/hospital2.png")));
 		getContentPane().addMouseListener(new MouseAdapter() {
 			@Override
@@ -116,27 +123,27 @@ public class Servicos extends JDialog {
 		
 		JLabel lblOS = new JLabel("OS:");
 		lblOS.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblOS.setBounds(88, 80, 46, 14);
+		lblOS.setBounds(98, 26, 46, 14);
 		getContentPane().add(lblOS);
 		
 		JLabel lblData = new JLabel("Data:");
 		lblData.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblData.setBounds(88, 145, 46, 14);
+		lblData.setBounds(98, 91, 46, 14);
 		getContentPane().add(lblData);
 		
 		JLabel lblBrinquedo = new JLabel("Brinquedo:");
 		lblBrinquedo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblBrinquedo.setBounds(89, 233, 80, 26);
+		lblBrinquedo.setBounds(94, 213, 80, 26);
 		getContentPane().add(lblBrinquedo);
 		
 		JLabel lblDefeito = new JLabel("Defeito:");
 		lblDefeito.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDefeito.setBounds(89, 285, 80, 14);
+		lblDefeito.setBounds(99, 267, 80, 14);
 		getContentPane().add(lblDefeito);
 		
 		JLabel lblValor = new JLabel("Valor:");
 		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblValor.setBounds(90, 342, 46, 14);
+		lblValor.setBounds(98, 351, 46, 14);
 		getContentPane().add(lblValor);
 		
 		txtOS = new JTextField();
@@ -152,7 +159,7 @@ public class Servicos extends JDialog {
 				}
 			}
 		});
-		txtOS.setBounds(119, 79, 86, 26);
+		txtOS.setBounds(129, 25, 86, 26);
 		getContentPane().add(txtOS);
 		txtOS.setColumns(10);
 		
@@ -169,17 +176,17 @@ public class Servicos extends JDialog {
 				}
 			}
 		});
-		txtData.setBounds(129, 142, 132, 26);
+		txtData.setBounds(139, 88, 132, 26);
 		getContentPane().add(txtData);
 		txtData.setColumns(10);
 		
 		txtBrinquedo = new JTextField();
-		txtBrinquedo.setBounds(175, 238, 370, 26);
+		txtBrinquedo.setBounds(180, 218, 370, 26);
 		getContentPane().add(txtBrinquedo);
 		txtBrinquedo.setColumns(10);
 		
 		txtDefeito = new JTextField();
-		txtDefeito.setBounds(175, 282, 370, 26);
+		txtDefeito.setBounds(180, 263, 370, 26);
 		getContentPane().add(txtDefeito);
 		txtDefeito.setColumns(10);
 		txtDefeito.setDocument(new Validador(200));
@@ -227,7 +234,7 @@ public class Servicos extends JDialog {
 				buscar();
 			}
 		});
-		btnBuscar.setBounds(216, 77, 48, 48);
+		btnBuscar.setBounds(226, 23, 48, 48);
 		getContentPane().add(btnBuscar);
 		
 		btnLimpar =new JButton("");
@@ -245,13 +252,13 @@ public class Servicos extends JDialog {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Cliente", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(377, 82, 230, 93);
+		panel.setBounds(447, 28, 230, 93);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		scrollPaneCliente = new JScrollPane();
 		scrollPaneCliente.setVisible(false);
-		scrollPaneCliente.setBounds(9, 47, 210, 32);
+		scrollPaneCliente.setBounds(9, 43, 210, 32);
 		panel.add(scrollPaneCliente);
 		
 		listCliente = new JList();
@@ -314,9 +321,41 @@ public class Servicos extends JDialog {
 				}
 			}
 		});
-		txtValor.setBounds(132, 339, 86, 26);
+		txtValor.setBounds(140, 347, 86, 26);
 		getContentPane().add(txtValor);
 		txtValor.setColumns(10);
+		
+		JLabel lblDescricao = new JLabel("Descrição:");
+		lblDescricao.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDescricao.setBounds(236, 312, 100, 17);
+		getContentPane().add(lblDescricao);
+		
+		txtDescricao = new JTextArea();
+		txtDescricao.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		txtDescricao.setBounds(317, 313, 344, 117);
+		getContentPane().add(txtDescricao);
+		
+		lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setOpaque(true);
+		lblNewLabel_1.setBackground(new Color(255, 128, 255));
+		lblNewLabel_1.setBounds(696, 0, 88, 561);
+		getContentPane().add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("");
+		lblNewLabel_1_1.setOpaque(true);
+		lblNewLabel_1_1.setBackground(new Color(255, 128, 255));
+		lblNewLabel_1_1.setBounds(0, 0, 88, 561);
+		getContentPane().add(lblNewLabel_1_1);
+		
+		JLabel lblAtendente = new JLabel("Atendente:");
+		lblAtendente.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblAtendente.setBounds(98, 172, 82, 14);
+		getContentPane().add(lblAtendente);
+		
+		txtAtendente = new JTextField();
+		txtAtendente.setBounds(181, 169, 158, 26);
+		getContentPane().add(txtAtendente);
+		txtAtendente.setColumns(10);
 
 	}// construtor
 	
@@ -332,7 +371,9 @@ public class Servicos extends JDialog {
 		txtOS.setText(null);
 		txtValor.setText(null);
 		btnBuscar.setEnabled(true);
-		txtCliente.setText(null);		
+		txtCliente.setText(null);	
+		txtDescricao.setText(null);
+		txtAtendente.setText(null);
 	}
 	
 	/**
@@ -365,7 +406,9 @@ public class Servicos extends JDialog {
 				txtBrinquedo.setText(rs.getString(3)); 
 				txtDefeito.setText(rs.getString(4));
 				txtValor.setText(rs.getString(5));
-				txtID.setText(rs.getString(6));
+				txtDescricao.setText(rs.getString(6));
+				txtAtendente.setText(rs.getString(7));
+				txtID.setText(rs.getString(8));
 				
 				
 				btnEditar.setEnabled(true);
@@ -395,7 +438,7 @@ public class Servicos extends JDialog {
 			
 			// lógica pricipal
 			// CRUD Creat
-			String create = "insert into servicos (brinquedo,defeito,valor,id) value (?, ?, ?, ?)";
+			String create = "insert into servicos (brinquedo,defeito,valor,descricao,id) value (?, ?, ?, ?, ?)";
 			// tratamento com exceções
 			try {
 				//abrir conexão 
@@ -405,7 +448,9 @@ public class Servicos extends JDialog {
 				pst.setString(1, txtBrinquedo.getText());
 				pst.setString(2, txtDefeito.getText());
 				pst.setString(3, txtValor.getText());
-				pst.setString(4, txtID.getText());
+				pst.setString(4, txtDescricao.getText());
+				pst.setString(5, txtAtendente.getText());
+				pst.setString(6, txtID.getText());
 				
 				//executar a query(instruição sql (CRUD - Creat))
 				pst.executeUpdate();
@@ -465,7 +510,7 @@ public class Servicos extends JDialog {
 
 			// Lógica principal
 			// CRUD - Update
-			String update = "update servicos set os=?, brinquedo=?, defeito=?, valor=? where id=?";
+			String update = "update servicos set os=?, brinquedo=?, defeito=?, valor=?, descricao=? where id=?";
 			// tratamentos de exceçoes
 			try {
 				// como a conexão
@@ -476,7 +521,9 @@ public class Servicos extends JDialog {
 				pst.setString(2, txtBrinquedo.getText());
 				pst.setString(3, txtDefeito.getText());
 				pst.setString(4, txtValor.getText());
-				pst.setString(5, txtID.getText());
+				pst.setString(5, txtDescricao.getText());
+				pst.setString(6, txtAtendente.getText());
+				pst.setString(7, txtID.getText());
 				// executar a query
 				pst.executeUpdate();
 				// confirmar para o usuário
@@ -592,6 +639,10 @@ public class Servicos extends JDialog {
 					Paragraph os = new Paragraph ("OS: " + rs.getString(1));
 					os.setAlignment(Element.ALIGN_RIGHT);
 					document.add(os);
+					
+					Paragraph data = new Paragraph ("Data: " + rs.getString(2));
+					data.setAlignment(Element.ALIGN_LEFT);
+					document.add(data);
 						
 					Paragraph usuario = new Paragraph ("Brinquedo: " + rs.getString(3));
 					usuario.setAlignment(Element.ALIGN_LEFT);
@@ -600,15 +651,16 @@ public class Servicos extends JDialog {
 					Paragraph defeito = new Paragraph ("Defeito: " + rs.getString(4));
 					defeito.setAlignment(Element.ALIGN_LEFT);
 					document.add(defeito);
+	
 					
-					Paragraph data = new Paragraph ("Data: " + rs.getString(2));
-					data.setAlignment(Element.ALIGN_LEFT);
-					document.add(data);
-					
-					Paragraph valor = new Paragraph ("Valor: " + rs.getString(6));
+					Paragraph valor = new Paragraph ("Valor: " + rs.getString(5));
 					valor.setAlignment(Element.ALIGN_LEFT);
 					document.add(valor);
-				
+					
+					Paragraph descricao = new Paragraph ("Descrição: " + rs.getString(6));
+					descricao.setAlignment(Element.ALIGN_LEFT);
+					document.add(descricao);
+					
 				
 				
 					//imprimir imagens

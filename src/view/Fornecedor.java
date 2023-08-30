@@ -71,6 +71,7 @@ public class Fornecedor extends JDialog {
 	private JTextField txtSite;
 	private JTextField txtVendedor;
 	private JTextField txtFone;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -126,7 +127,7 @@ public class Fornecedor extends JDialog {
 				Adicionar();
 			}
 		});
-		btnAdicionar.setBounds(167, 502, 48, 48);
+		btnAdicionar.setBounds(154, 501, 48, 48);
 		contentPanel.add(btnAdicionar);
 		
 		btnExcluir = new JButton("");
@@ -139,7 +140,7 @@ public class Fornecedor extends JDialog {
 				excluirFornecedor();
 			}
 		});
-		btnExcluir.setBounds(289, 502, 48, 48);
+		btnExcluir.setBounds(276, 502, 48, 48);
 		contentPanel.add(btnExcluir);
 		
 		btnEditar = new JButton("");
@@ -164,7 +165,7 @@ public class Fornecedor extends JDialog {
 				limparCampos();
 			}
 		});
-		btnLimpar.setBounds(531, 502, 48, 48);
+		btnLimpar.setBounds(543, 502, 48, 48);
 		contentPanel.add(btnLimpar);
 		
 		JLabel lblID = new JLabel("ID:");
@@ -350,12 +351,6 @@ public class Fornecedor extends JDialog {
 		txtCNPJ.setColumns(10);
 		txtCNPJ.setDocument(new Validador(15));
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setOpaque(true);
-		lblNewLabel.setBackground(new Color(255, 128, 192));
-		lblNewLabel.setBounds(0, 483, 784, 78);
-		contentPanel.add(lblNewLabel);
-		
 		JLabel lblFantasia = new JLabel("Nome Fantasia:");
 		lblFantasia.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblFantasia.setBounds(57, 404, 132, 14);
@@ -411,6 +406,12 @@ public class Fornecedor extends JDialog {
 		txtFone.setBounds(54, 111, 130, 27);
 		contentPanel.add(txtFone);
 		txtFone.setColumns(10);
+		
+		lblNewLabel = new JLabel("\r\n");
+		lblNewLabel.setOpaque(true);
+		lblNewLabel.setBackground(new Color(255, 128, 255));
+		lblNewLabel.setBounds(1, 486, 784, 75);
+		contentPanel.add(lblNewLabel);
 	}
 	/**
 	 * buscarCep

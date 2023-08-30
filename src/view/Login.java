@@ -43,6 +43,7 @@ public class Login extends JFrame {
 	private JTextField txtLogins;
 	private JPasswordField txtSenha;
 	private JLabel lblStatus;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -124,12 +125,11 @@ public class Login extends JFrame {
 		contentPane.add(txtSenha);
 
 		getRootPane().setDefaultButton(btnAcessar);
-
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setBackground(new Color(255, 128, 192));
+		
+		lblNewLabel = new JLabel("\r\n");
 		lblNewLabel.setOpaque(true);
-		lblNewLabel.setForeground(new Color(255, 128, 192));
-		lblNewLabel.setBounds(0, 114, 434, 48);
+		lblNewLabel.setBackground(new Color(255, 128, 255));
+		lblNewLabel.setBounds(0, 111, 434, 51);
 		contentPane.add(lblNewLabel);
 
 	}// Fim do construtor

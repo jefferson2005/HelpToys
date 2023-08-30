@@ -60,6 +60,7 @@ public class Clientes extends JDialog {
 		private JComboBox cboUf;
 		private JScrollPane scrollPaneClientes;
 		private JList listClientes;
+		private JLabel lblNewLabel_3;
 		
 		
 	/**
@@ -232,13 +233,6 @@ public class Clientes extends JDialog {
 		btnExcluir.setBounds(308, 502, 48, 48);
 		getContentPane().add(btnExcluir);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setOpaque(true);
-		lblNewLabel.setBackground(new Color(255, 128, 192));
-		lblNewLabel.setForeground(new Color(255, 128, 192));
-		lblNewLabel.setBounds(0, 490, 784, 71);
-		getContentPane().add(lblNewLabel);
-		
 		JLabel lblCep = new JLabel("CEP:");
 		lblCep.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblCep.setBounds(427, 74, 46, 14);
@@ -328,7 +322,7 @@ public class Clientes extends JDialog {
 		JLabel lblNewLabel_2 = 	new JLabel("");
 		lblNewLabel_2.setOpaque(true);
 		lblNewLabel_2.setBackground(new Color(255, 255, 255));
-		lblNewLabel_2.setBounds(0, 0, 385, 491);
+		lblNewLabel_2.setBounds(0, 0, 385, 488);
 		getContentPane().add(lblNewLabel_2);
 		
 		cboUf = 	new JComboBox();
@@ -337,6 +331,12 @@ public class Clientes extends JDialog {
 		cboUf.setBounds(604, 264, 70, 26);
 		getContentPane().add(cboUf);
 		getRootPane().setDefaultButton(btnBuscarCep);
+		
+		lblNewLabel_3 = new JLabel("\r\n");
+		lblNewLabel_3.setOpaque(true);
+		lblNewLabel_3.setBackground(new Color(255, 128, 255));
+		lblNewLabel_3.setBounds(-3, 488, 784, 75);
+		getContentPane().add(lblNewLabel_3);
 
 	}//Fim do construtor
 	
