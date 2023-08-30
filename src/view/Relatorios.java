@@ -1,8 +1,12 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Desktop;
-import java.awt.FlowLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.Connection;
@@ -11,12 +15,15 @@ import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.util.Date;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -24,14 +31,6 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import model.DAO;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Toolkit;
-import javax.swing.JTextField;
 
 public class Relatorios extends JDialog {
 	
@@ -42,6 +41,9 @@ public class Relatorios extends JDialog {
 	private ResultSet rs;
 	
 	private final JPanel contentPanel = new JPanel();
+	private JButton btnFornecedores;
+	private JButton btnVenda;
+	private JButton btnPatri;
 
 	/**
 	 * Launch the application.
@@ -80,32 +82,32 @@ public class Relatorios extends JDialog {
 			}
 		});
 		
-		JButton btnNewButton = new JButton("");
-		btnNewButton.setIcon(new ImageIcon(Relatorios.class.getResource("/img2/Money.png")));
-		btnNewButton.addActionListener(new ActionListener() {
+		btnPatri = new JButton("");
+		btnPatri.setIcon(new ImageIcon(Relatorios.class.getResource("/img2/Money.png")));
+		btnPatri.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CustoPatrimonio();
 			}
 		});
 		
-		JButton btnNewButton_1 = new JButton("");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		btnVenda = new JButton("");
+		btnVenda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VendaPatrimonio();
 			}
 		});
-		btnNewButton_1.setIcon(new ImageIcon(Relatorios.class.getResource("/img2/Carrinho.png")));
-		btnNewButton_1.setBounds(494, 502, 48, 48);
-		contentPanel.add(btnNewButton_1);
+		btnVenda.setIcon(new ImageIcon(Relatorios.class.getResource("/img2/Carrinho.png")));
+		btnVenda.setBounds(494, 502, 48, 48);
+		contentPanel.add(btnVenda);
 		
 		JLabel lblNewLabel_1 = new JLabel("Venda Patrimônio:");
 		lblNewLabel_1.setBounds(383, 520, 110, 14);
 		contentPanel.add(lblNewLabel_1);
-		btnNewButton.setBounds(284, 502, 48, 48);
-		contentPanel.add(btnNewButton);
+		btnPatri.setBounds(272, 502, 48, 48);
+		contentPanel.add(btnPatri);
 		
 		JLabel lbl = new JLabel("Custo Patrimônio:");
-		lbl.setBounds(171, 520, 110, 14);
+		lbl.setBounds(152, 520, 110, 14);
 		contentPanel.add(lbl);
 		btnClientes.setBounds(105, 80, 128, 128);
 		contentPanel.add(btnClientes);
@@ -119,7 +121,7 @@ public class Relatorios extends JDialog {
 				relatorioServicos();
 			}
 		});
-		btnServicos.setBounds(507, 80, 128, 128);
+		btnServicos.setBounds(494, 80, 128, 128);
 		contentPanel.add(btnServicos);
 		
 		JLabel lblNewLabel = new JLabel("");
@@ -131,14 +133,26 @@ public class Relatorios extends JDialog {
 		JButton btnRepor = new JButton("");
 		btnRepor.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnRepor.setIcon(new ImageIcon(Relatorios.class.getResource("/img2/Repor.png")));
-		btnRepor.setToolTipText("Repor");
+		btnRepor.setToolTipText("Reposição ");
 		btnRepor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Repor();
 			}
 		});
-		btnRepor.setBounds(294, 256, 128, 128);
+		btnRepor.setBounds(403, 255, 128, 128);
 		contentPanel.add(btnRepor);
+		
+		btnFornecedores = new JButton("");
+		btnFornecedores.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {		
+				Fornecedores();
+			}
+		});
+		btnFornecedores.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnFornecedores.setIcon(new ImageIcon(Relatorios.class.getResource("/img2/Fornecedor.png")));
+		btnFornecedores.setToolTipText("Fornecedores");
+		btnFornecedores.setBounds(172, 255, 128, 128);
+		contentPanel.add(btnFornecedores);
 	}//Fim do construtor
 	
 	
@@ -180,7 +194,8 @@ public class Relatorios extends JDialog {
 				tabela.addCell(col1);
 				tabela.addCell(col2);
 				tabela.addCell(col3);
-				
+			
+			
 				while (rs.next()) {
 					//popular a tabela
 					tabela.addCell(rs.getString(1));
@@ -488,4 +503,103 @@ public class Relatorios extends JDialog {
 			System.out.println(e);
 		}		
 	}
+	
+	private void Fornecedores() {
+		//instanciar um objeto para construir a página pdf
+		Document document = new Document();
+		//configurar como A4 e modo paisagem
+		document.setPageSize(PageSize.A4.rotate());
+		//gerar o documento pdf
+		try {
+			//criar um documento em branco (pdf) de nome clientes.pdf
+			PdfWriter.getInstance(document, new FileOutputStream("fornecedores.pdf"));
+			//abrir o documento (formatar e inserir o conteúdo)
+			document.open();
+			//adicionar a data atual
+			Date dataRelatorio = new Date();
+			DateFormat formatador = DateFormat.getDateInstance(DateFormat.FULL);
+			document.add(new Paragraph(formatador.format(dataRelatorio)));
+			//adicionar um páragrafo
+			document.add(new Paragraph("Fornecedores:"));
+			document.add(new Paragraph("")); //pular uma linha
+			//----------------------------------------------------------
+			//query (instrução sql para gerar o relatório de clientes)
+			String readPatrimonio = " select \n"
+					+ " idfornecedores,\n"
+					+ " razao,\n"
+					+ " fantasia,\n"
+					+ " fone,\n"
+					+ " email,\n"
+					+ " site,\n"
+					+ " cnpj,\n"
+					+ " ie,\n"
+					+ " cep"
+					+ " from fornecedor;";
+			try {
+				//abrir a conexão com o banco
+				con = dao.conectar();
+				//preparar a query (executar a instrução sql)
+				pst = con.prepareStatement(readPatrimonio);
+				//obter o resultado (trazer do banco de dados)
+				rs = pst.executeQuery();
+				//atenção uso do while para trazer todos os clientes
+				// Criar uma tabela de duas colunas usando o framework(itextPDF)
+				PdfPTable tabela = new PdfPTable(9); //(2) número de colunas
+				// Criar o cabeçalho da tabela
+				PdfPCell col1 = new PdfPCell(new Paragraph("ID Fornecedor"));
+				PdfPCell col2 = new PdfPCell(new Paragraph("Razão Social"));
+				PdfPCell col3 = new PdfPCell(new Paragraph("Nome Fantasia"));
+				PdfPCell col4 = new PdfPCell(new Paragraph("Número de Telefone"));
+				PdfPCell col5 = new PdfPCell(new Paragraph("E-mail"));
+				PdfPCell col6 = new PdfPCell(new Paragraph("Site"));
+				PdfPCell col7 = new PdfPCell(new Paragraph("CPNJ"));
+				PdfPCell col8 = new PdfPCell(new Paragraph("Inscrição Estadual"));
+				PdfPCell col9 = new PdfPCell(new Paragraph("CEP"));
+
+			
+				tabela.addCell(col1);
+				tabela.addCell(col2);
+				tabela.addCell(col3);
+				tabela.addCell(col4);
+				tabela.addCell(col5);
+				tabela.addCell(col6);
+				tabela.addCell(col7);
+				tabela.addCell(col8);
+				tabela.addCell(col9);
+			
+				
+				while (rs.next()) {
+					//popular a tabela
+					tabela.addCell(rs.getString(1));
+					tabela.addCell(rs.getString(2));
+					tabela.addCell(rs.getString(3));
+					tabela.addCell(rs.getString(4));
+					tabela.addCell(rs.getString(5));
+					tabela.addCell(rs.getString(6));
+					tabela.addCell(rs.getString(7));
+					tabela.addCell(rs.getString(8));
+					tabela.addCell(rs.getString(9));
+					
+				}				
+				//adicionar a tabela ao documento pdf
+				document.add(tabela);
+				//fechar a conexão com o banco
+				con.close();
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		//fechar o documento (pronto para "impressão" (exibir o pdf))
+		document.close();
+		//Abrir o desktop do sistema operacional e usar o leitor padrão
+		//de pdf para exibir o documento
+		try {
+			Desktop.getDesktop().open(new File("fornecedores.pdf"));
+		} catch (Exception e) {
+			System.out.println(e);
+		}		
+	}
+	
 }//Fim do codigo

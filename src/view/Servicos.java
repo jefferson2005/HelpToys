@@ -40,6 +40,7 @@ import javax.swing.ImageIcon;
 import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Toolkit;
+import java.awt.Font;
 
 public class Servicos extends JDialog {
 	
@@ -99,7 +100,7 @@ public class Servicos extends JDialog {
 		});
 		setTitle("Serviços ");
 		setModal(true);
-		setBounds(100, 100, 560, 350);
+		setBounds(100, 100, 800, 600);
 		getContentPane().setLayout(null);
 		
 		btnOS = new JButton("");
@@ -110,27 +111,32 @@ public class Servicos extends JDialog {
 				imprimirOS();
 			}
 		});
-		btnOS.setBounds(235, 247, 48, 48);
+		btnOS.setBounds(343, 502, 48, 48);
 		getContentPane().add(btnOS);
 		
 		JLabel lblOS = new JLabel("OS:");
-		lblOS.setBounds(24, 25, 46, 14);
+		lblOS.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblOS.setBounds(88, 80, 46, 14);
 		getContentPane().add(lblOS);
 		
 		JLabel lblData = new JLabel("Data:");
-		lblData.setBounds(24, 75, 46, 14);
+		lblData.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblData.setBounds(88, 145, 46, 14);
 		getContentPane().add(lblData);
 		
 		JLabel lblBrinquedo = new JLabel("Brinquedo:");
-		lblBrinquedo.setBounds(24, 118, 80, 14);
+		lblBrinquedo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblBrinquedo.setBounds(89, 233, 80, 26);
 		getContentPane().add(lblBrinquedo);
 		
 		JLabel lblDefeito = new JLabel("Defeito:");
-		lblDefeito.setBounds(24, 162, 46, 14);
+		lblDefeito.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDefeito.setBounds(89, 285, 80, 14);
 		getContentPane().add(lblDefeito);
 		
 		JLabel lblValor = new JLabel("Valor:");
-		lblValor.setBounds(24, 208, 46, 14);
+		lblValor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblValor.setBounds(90, 342, 46, 14);
 		getContentPane().add(lblValor);
 		
 		txtOS = new JTextField();
@@ -146,7 +152,7 @@ public class Servicos extends JDialog {
 				}
 			}
 		});
-		txtOS.setBounds(55, 22, 86, 20);
+		txtOS.setBounds(119, 79, 86, 26);
 		getContentPane().add(txtOS);
 		txtOS.setColumns(10);
 		
@@ -163,17 +169,17 @@ public class Servicos extends JDialog {
 				}
 			}
 		});
-		txtData.setBounds(65, 72, 132, 20);
+		txtData.setBounds(129, 142, 132, 26);
 		getContentPane().add(txtData);
 		txtData.setColumns(10);
 		
 		txtBrinquedo = new JTextField();
-		txtBrinquedo.setBounds(110, 115, 370, 20);
+		txtBrinquedo.setBounds(175, 238, 370, 26);
 		getContentPane().add(txtBrinquedo);
 		txtBrinquedo.setColumns(10);
 		
 		txtDefeito = new JTextField();
-		txtDefeito.setBounds(110, 159, 370, 20);
+		txtDefeito.setBounds(175, 282, 370, 26);
 		getContentPane().add(txtDefeito);
 		txtDefeito.setColumns(10);
 		txtDefeito.setDocument(new Validador(200));
@@ -186,7 +192,7 @@ public class Servicos extends JDialog {
 				adicionar();
 			}
 		});
-		btnAdicionar.setBounds(37, 247, 48, 48);
+		btnAdicionar.setBounds(145, 502, 48, 48);
 		getContentPane().add(btnAdicionar);
 		
 		btnEditar = new JButton("");
@@ -198,7 +204,7 @@ public class Servicos extends JDialog {
 			}
 		});
 		btnEditar.setEnabled(false);
-		btnEditar.setBounds(136, 247, 48, 48);
+		btnEditar.setBounds(244, 502, 48, 48);
 		getContentPane().add(btnEditar);
 		
 		btnExcluir = new JButton("");
@@ -210,7 +216,7 @@ public class Servicos extends JDialog {
 				excluirServico();
 			}
 		});
-		btnExcluir.setBounds(339, 247, 48, 48);
+		btnExcluir.setBounds(447, 502, 48, 48);
 		getContentPane().add(btnExcluir);
 		
 		btnBuscar = new JButton("");
@@ -221,7 +227,7 @@ public class Servicos extends JDialog {
 				buscar();
 			}
 		});
-		btnBuscar.setBounds(151, 11, 48, 48);
+		btnBuscar.setBounds(216, 77, 48, 48);
 		getContentPane().add(btnBuscar);
 		
 		btnLimpar =new JButton("");
@@ -232,20 +238,20 @@ public class Servicos extends JDialog {
 				limparCampos();
 			}
 		});
-		btnLimpar.setBounds(432, 247, 48, 48);
+		btnLimpar.setBounds(540, 502, 48, 48);
 		getContentPane().add(btnLimpar);
 		
 		getRootPane().setDefaultButton(btnBuscar);
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Cliente", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(304, 11, 230, 93);
+		panel.setBounds(377, 82, 230, 93);
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		scrollPaneCliente = new JScrollPane();
 		scrollPaneCliente.setVisible(false);
-		scrollPaneCliente.setBounds(10, 40, 210, 32);
+		scrollPaneCliente.setBounds(9, 47, 210, 32);
 		panel.add(scrollPaneCliente);
 		
 		listCliente = new JList();
@@ -265,7 +271,7 @@ public class Servicos extends JDialog {
 				listarCliente();
 			}
 		});
-		txtCliente.setBounds(10, 21, 210, 20);
+		txtCliente.setBounds(10, 21, 210, 26);
 		panel.add(txtCliente);
 		txtCliente.setColumns(10);
 		
@@ -293,7 +299,7 @@ public class Servicos extends JDialog {
 		lblNewLabel = new JLabel("");
 		lblNewLabel.setBackground(new Color(255, 128, 255));
 		lblNewLabel.setOpaque(true);
-		lblNewLabel.setBounds(0, 236, 544, 75);
+		lblNewLabel.setBounds(0, 486, 784, 75);
 		getContentPane().add(lblNewLabel);
 		
 		txtValor = new JTextField();
@@ -308,7 +314,7 @@ public class Servicos extends JDialog {
 				}
 			}
 		});
-		txtValor.setBounds(66, 205, 86, 20);
+		txtValor.setBounds(132, 339, 86, 26);
 		getContentPane().add(txtValor);
 		txtValor.setColumns(10);
 
