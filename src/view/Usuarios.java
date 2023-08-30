@@ -33,6 +33,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.border.MatteBorder;
+import java.awt.Font;
 
 public class Usuarios extends JDialog {
 
@@ -92,7 +93,7 @@ public class Usuarios extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		scrollPaneUsers.setVisible(false);
-		scrollPaneUsers.setBounds(66, 105, 214, 62);
+		scrollPaneUsers.setBounds(216, 238, 214, 62);
 		contentPanel.add(scrollPaneUsers);
 		
 				listUsers = new JList();
@@ -105,19 +106,23 @@ public class Usuarios extends JDialog {
 				});
 
 		JLabel lblNewLabel = new JLabel("ID:");
-		lblNewLabel.setBounds(10, 27, 46, 14);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setBounds(162, 138, 46, 14);
 		contentPanel.add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("Nome:");
-		lblNewLabel_1.setBounds(10, 86, 46, 14);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setBounds(160, 217, 46, 14);
 		contentPanel.add(lblNewLabel_1);
 
 		JLabel lblNewLabel_2 = new JLabel("Login:");
-		lblNewLabel_2.setBounds(10, 55, 46, 14);
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_2.setBounds(161, 176, 46, 23);
 		contentPanel.add(lblNewLabel_2);
 
 		JLabel lblSenha = new JLabel("Senha:");
-		lblSenha.setBounds(10, 114, 46, 14);
+		lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblSenha.setBounds(161, 258, 46, 14);
 		contentPanel.add(lblSenha);
 
 		txtID = new JTextField();
@@ -127,7 +132,7 @@ public class Usuarios extends JDialog {
 		txtID.setSelectedTextColor(new Color(0, 0, 0));
 		txtID.setForeground(new Color(0, 0, 0));
 		txtID.setEditable(false);
-		txtID.setBounds(66, 24, 86, 20);
+		txtID.setBounds(218, 135, 86, 20);
 		contentPanel.add(txtID);
 		txtID.setColumns(10);
 
@@ -146,7 +151,7 @@ public class Usuarios extends JDialog {
 				listarUsuarios();
 			}
 		});
-		txtNome.setBounds(66, 83, 214, 20);
+		txtNome.setBounds(216, 214, 214, 26);
 		contentPanel.add(txtNome);
 		txtNome.setColumns(10);
 		txtNome.setDocument(new Validador(50));
@@ -155,7 +160,7 @@ public class Usuarios extends JDialog {
 		txtLogin.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		txtLogin.setCaretColor(new Color(0, 0, 0));
 		txtLogin.setForeground(new Color(0, 0, 0));
-		txtLogin.setBounds(66, 52, 214, 20);
+		txtLogin.setBounds(217, 173, 214, 26);
 		contentPanel.add(txtLogin);
 		txtLogin.setColumns(10);
 		// uso do validador para limitar o número de caracteres
@@ -172,7 +177,7 @@ public class Usuarios extends JDialog {
 		btnPesquisar.setBorder(null);
 		btnPesquisar.setIcon(new ImageIcon(Usuarios.class.getResource("/img/pesquisar.png")));
 		btnPesquisar.setToolTipText("Pesquisar");
-		btnPesquisar.setBounds(285, 27, 48, 48);
+		btnPesquisar.setBounds(454, 153, 48, 48);
 		contentPanel.add(btnPesquisar);
 
 		JButton btnLimpar = new JButton("");
@@ -186,7 +191,7 @@ public class Usuarios extends JDialog {
 		btnLimpar.setBorder(null);
 		btnLimpar.setIcon(new ImageIcon(Usuarios.class.getResource("/img/clear icon.png")));
 		btnLimpar.setToolTipText("Apagar");
-		btnLimpar.setBounds(31, 202, 48, 48);
+		btnLimpar.setBounds(199, 502, 48, 48);
 		contentPanel.add(btnLimpar);
 
 		getRootPane().setDefaultButton(btnPesquisar);
@@ -202,7 +207,7 @@ public class Usuarios extends JDialog {
 		btnAdicionar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnAdicionar.setBorder(null);
 		btnAdicionar.setIcon(new ImageIcon(Usuarios.class.getResource("/img/ADD.png")));
-		btnAdicionar.setBounds(209, 195, 55, 55);
+		btnAdicionar.setBounds(377, 495, 55, 55);
 		contentPanel.add(btnAdicionar);
 
 		btnEditar = new JButton("");
@@ -224,7 +229,7 @@ public class Usuarios extends JDialog {
 		});
 		btnEditar.setIcon(new ImageIcon(Usuarios.class.getResource("/img/Editor.png")));
 		btnEditar.setToolTipText("Editar");
-		btnEditar.setBounds(293, 195, 55, 55);
+		btnEditar.setBounds(461, 495, 55, 55);
 		contentPanel.add(btnEditar);
 
 		btnExcluir = new JButton("");
@@ -239,22 +244,23 @@ public class Usuarios extends JDialog {
 		btnExcluir.setBorderPainted(false);
 		btnExcluir.setIcon(new ImageIcon(Usuarios.class.getResource("/img/Excluir Contato.png")));
 		btnExcluir.setToolTipText("Excluir");
-		btnExcluir.setBounds(114, 195, 55, 55);
+		btnExcluir.setBounds(282, 495, 55, 55);
 		contentPanel.add(btnExcluir);
 
 		JLabel lblNewLabel_3 = new JLabel("\r\n");
 		lblNewLabel_3.setBackground(new Color(255, 128, 192));
 		lblNewLabel_3.setOpaque(true);
-		lblNewLabel_3.setBounds(0, 186, 389, 75);
+		lblNewLabel_3.setBounds(0, 486, 784, 75);
 		contentPanel.add(lblNewLabel_3);
 
 		JLabel lblNewLabel_4 = new JLabel("Perfil:");
-		lblNewLabel_4.setBounds(264, 153, 46, 14);
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_4.setBounds(416, 307, 46, 14);
 		contentPanel.add(lblNewLabel_4);
 
 		cboPerfil = new JComboBox();
 		cboPerfil.setModel(new DefaultComboBoxModel(new String[] { "", "admin", "user" }));
-		cboPerfil.setBounds(309, 146, 70, 29);
+		cboPerfil.setBounds(461, 300, 70, 29);
 		contentPanel.add(cboPerfil);
 
 		chckSenha = new JCheckBox("Alterar Senha");
@@ -271,12 +277,12 @@ public class Usuarios extends JDialog {
 				
 			}
 		});
-		chckSenha.setBounds(10, 149, 118, 23);
+		chckSenha.setBounds(150, 306, 118, 23);
 		contentPanel.add(chckSenha);
 				
 				txtSenha = new JPasswordField();
 				txtSenha.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-				txtSenha.setBounds(66, 114, 214, 20);
+				txtSenha.setBounds(217, 258, 214, 26);
 				contentPanel.add(txtSenha);
 	}
 

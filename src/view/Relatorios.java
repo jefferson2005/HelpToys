@@ -84,7 +84,7 @@ public class Relatorios extends JDialog {
 		btnNewButton.setIcon(new ImageIcon(Relatorios.class.getResource("/img2/Money.png")));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 VendaPatrimonio();
+				CustoPatrimonio();
 			}
 		});
 		
@@ -95,17 +95,17 @@ public class Relatorios extends JDialog {
 			}
 		});
 		btnNewButton_1.setIcon(new ImageIcon(Relatorios.class.getResource("/img2/Carrinho.png")));
-		btnNewButton_1.setBounds(345, 497, 48, 48);
+		btnNewButton_1.setBounds(494, 502, 48, 48);
 		contentPanel.add(btnNewButton_1);
 		
 		JLabel lblNewLabel_1 = new JLabel("Venda Patrimônio:");
-		lblNewLabel_1.setBounds(234, 515, 110, 14);
+		lblNewLabel_1.setBounds(383, 520, 110, 14);
 		contentPanel.add(lblNewLabel_1);
-		btnNewButton.setBounds(135, 497, 48, 48);
+		btnNewButton.setBounds(284, 502, 48, 48);
 		contentPanel.add(btnNewButton);
 		
 		JLabel lbl = new JLabel("Custo Patrimônio:");
-		lbl.setBounds(22, 515, 110, 14);
+		lbl.setBounds(171, 520, 110, 14);
 		contentPanel.add(lbl);
 		btnClientes.setBounds(105, 80, 128, 128);
 		contentPanel.add(btnClientes);

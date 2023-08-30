@@ -99,7 +99,7 @@ public class Clientes extends JDialog {
 		
 		scrollPaneClientes = new JScrollPane();
 		scrollPaneClientes.setVisible(false);
-		scrollPaneClientes.setBounds(101, 165, 151, 50);
+		scrollPaneClientes.setBounds(101, 173, 187, 42);
 		getContentPane().add(scrollPaneClientes);
 		
 		listClientes = new JList();
@@ -145,21 +145,21 @@ public class Clientes extends JDialog {
 				listarClientes();
 			}
 		});
-		txtNome.setBounds(101, 148, 151, 20);
+		txtNome.setBounds(101, 148, 187, 26);
 		getContentPane().add(txtNome);
 		txtNome.setColumns(10);
 		txtNome.setDocument(new Validador (50));
 		
 		txtFone = new JTextField();
 		txtFone.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtFone.setBounds(101, 223, 151, 20);
+		txtFone.setBounds(101, 223, 189, 26);
 		getContentPane().add(txtFone);
 		txtFone.setColumns(10);
 		txtFone.setDocument(new Validador (15));
 		
 		txtEmail = new JTextField();
 		txtEmail.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtEmail.setBounds(101, 265, 151, 20);
+		txtEmail.setBounds(101, 265, 189, 26);
 		getContentPane().add(txtEmail);
 		txtEmail.setColumns(10);
 		txtEmail.setDocument(new Validador (30));
@@ -184,13 +184,13 @@ public class Clientes extends JDialog {
 		
 		JLabel lblID = new JLabel("ID:");
 		lblID.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblID.setBounds(37, 118, 46, 14);
+		lblID.setBounds(37, 116, 46, 14);
 		getContentPane().add(lblID);
 		
 		txtID = new JTextField();
 		txtID.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtID.setEditable(false);
-		txtID.setBounds(101, 117, 46, 20);
+		txtID.setBounds(101, 111, 46, 26);
 		getContentPane().add(txtID);
 		txtID.setColumns(10);
 		
@@ -241,7 +241,7 @@ public class Clientes extends JDialog {
 		
 		JLabel lblCep = new JLabel("CEP:");
 		lblCep.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblCep.setBounds(431, 73, 46, 14);
+		lblCep.setBounds(427, 74, 46, 14);
 		getContentPane().add(lblCep);
 		
 		JLabel lblEndereco = new JLabel("Endereço:");
@@ -276,39 +276,39 @@ public class Clientes extends JDialog {
 		
 		txtCep = new JTextField();
 		txtCep.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtCep.setBounds(427, 92, 74, 20);
+		txtCep.setBounds(427, 92, 74, 26);
 		getContentPane().add(txtCep);
 		txtCep.setColumns(10);
 		
 		txtEndereco = new JTextField();
 		txtEndereco.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtEndereco.setBounds(423, 143, 152, 20);
+		txtEndereco.setBounds(427, 143, 148, 26);
 		getContentPane().add(txtEndereco);
 		txtEndereco.setColumns(10);
 		
 		txtNumero = new JTextField();
 		txtNumero.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtNumero.setBounds(600, 142, 74, 20);
+		txtNumero.setBounds(600, 142, 74, 26);
 		getContentPane().add(txtNumero);
 		txtNumero.setColumns(10);
 		txtNumero.setDocument(new Validador(3));
 		
 		txtComplemento = new JTextField();
 		txtComplemento.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtComplemento.setBounds(424, 206, 151, 20);
+		txtComplemento.setBounds(424, 206, 151, 26);
 		getContentPane().add(txtComplemento);
 		txtComplemento.setColumns(10);
 		txtComplemento.setDocument(new Validador(20));
 		
 		txtBairro = new JTextField();
 		txtBairro.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtBairro.setBounds(600, 206, 102, 20);
+		txtBairro.setBounds(600, 206, 102, 26);
 		getContentPane().add(txtBairro);
 		txtBairro.setColumns(10);
 		
 		txtCidade = new JTextField();
 		txtCidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		txtCidade.setBounds(427, 265, 151, 20);
+		txtCidade.setBounds(427, 265, 151, 26);
 		getContentPane().add(txtCidade);
 		txtCidade.setColumns(10);
 		
@@ -334,7 +334,7 @@ public class Clientes extends JDialog {
 		cboUf = 	new JComboBox();
 		cboUf.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		cboUf.setModel(new DefaultComboBoxModel(new String[] {"", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"}));
-		cboUf.setBounds(604, 264, 70, 21);
+		cboUf.setBounds(604, 264, 70, 26);
 		getContentPane().add(cboUf);
 		getRootPane().setDefaultButton(btnBuscarCep);
 
