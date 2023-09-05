@@ -37,9 +37,6 @@ import java.awt.Font;
 
 public class Usuarios extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtID;
@@ -48,7 +45,6 @@ public class Usuarios extends JDialog {
 	private PreparedStatement pst;
 	private ResultSet rs;
 	private Connection con;
-	// Instanciar objetos JDBC
 	DAO dao = new DAO();
 	private JButton btnAdicionar;
 	private JButton btnEditar;
@@ -62,9 +58,6 @@ public class Usuarios extends JDialog {
 	private JLabel lblNewLabel_5;
 	private JLabel lblNewLabel_6;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		try {
 			Usuarios dialog = new Usuarios();
@@ -75,9 +68,6 @@ public class Usuarios extends JDialog {
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public Usuarios() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Usuarios.class.getResource("/img/users.png")));
 		setTitle("Usuarios");
@@ -86,7 +76,7 @@ public class Usuarios extends JDialog {
 		contentPanel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// clicar no painel JDialog
+
 				scrollPaneUsers.setVisible(false);
 			}
 		});
@@ -97,15 +87,15 @@ public class Usuarios extends JDialog {
 		scrollPaneUsers.setVisible(false);
 		scrollPaneUsers.setBounds(257, 236, 214, 62);
 		contentPanel.add(scrollPaneUsers);
-		
-				listUsers = new JList();
-				scrollPaneUsers.setColumnHeaderView(listUsers);
-				listUsers.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						buscarUsuarioLista();
-					}
-				});
+
+		listUsers = new JList();
+		scrollPaneUsers.setColumnHeaderView(listUsers);
+		listUsers.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				buscarUsuarioLista();
+			}
+		});
 
 		JLabel lblNewLabel = new JLabel("ID:");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -144,12 +134,12 @@ public class Usuarios extends JDialog {
 		txtNome.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
-				// pressionar uma tecla
+
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				// soltar uma tecla
+
 				listarUsuarios();
 			}
 		});
@@ -165,7 +155,7 @@ public class Usuarios extends JDialog {
 		txtLogin.setBounds(258, 173, 214, 26);
 		contentPanel.add(txtLogin);
 		txtLogin.setColumns(10);
-		// uso do validador para limitar o número de caracteres
+
 		txtLogin.setDocument(new Validador(15));
 
 		btnPesquisar = new JButton("");
@@ -219,7 +209,7 @@ public class Usuarios extends JDialog {
 		btnEditar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// evento que vai verificar se o checkbox foi selecionado
+
 				if (chckSenha.isSelected()) {
 					editarUsuario();
 
@@ -276,62 +266,55 @@ public class Usuarios extends JDialog {
 					txtSenha.setBackground(Color.white);
 
 				}
-				
+
 			}
 		});
 		chckSenha.setBounds(191, 306, 118, 23);
 		contentPanel.add(chckSenha);
-				
-				txtSenha = new JPasswordField();
-				txtSenha.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
-				txtSenha.setBounds(258, 258, 214, 26);
-				contentPanel.add(txtSenha);
-				
-				lblNewLabel_5 = new JLabel("\r\n");
-				lblNewLabel_5.setOpaque(true);
-				lblNewLabel_5.setBackground(new Color(255, 128, 255));
-				lblNewLabel_5.setBounds(0, 0, 100, 490);
-				contentPanel.add(lblNewLabel_5);
-				
-				lblNewLabel_6 = new JLabel("\r\n");
-				lblNewLabel_6.setOpaque(true);
-				lblNewLabel_6.setBackground(new Color(255, 128, 255));
-				lblNewLabel_6.setBounds(684, 0, 100, 490);
-				contentPanel.add(lblNewLabel_6);
+
+		txtSenha = new JPasswordField();
+		txtSenha.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
+		txtSenha.setBounds(258, 258, 214, 26);
+		contentPanel.add(txtSenha);
+
+		lblNewLabel_5 = new JLabel("\r\n");
+		lblNewLabel_5.setOpaque(true);
+		lblNewLabel_5.setBackground(new Color(255, 128, 255));
+		lblNewLabel_5.setBounds(0, 0, 100, 490);
+		contentPanel.add(lblNewLabel_5);
+
+		lblNewLabel_6 = new JLabel("\r\n");
+		lblNewLabel_6.setOpaque(true);
+		lblNewLabel_6.setBackground(new Color(255, 128, 255));
+		lblNewLabel_6.setBounds(684, 0, 100, 490);
+		contentPanel.add(lblNewLabel_6);
 	}
 
 	private void buscar() {
-		// Dica - testar o evento preimeiro
-		// System.out.println("teste do botão buscar");
-		// Criar ua variável com a query (instruções do banco)
+
 		String read = "select * from usuarios where login = ?";
-		// Tratamento de exceções
+
 		try {
-			// Abrir a conexão
+
 			con = dao.conectar();
 
-			// Preparar a exucução da query(instrução sql - CRUD Read)
-			// O paraêmtro 1 substitui a ? pelo conteúdo da caixa de texto
 			pst = con.prepareStatement(read);
 			pst.setString(1, txtLogin.getText());
-			// executar a query e buscar o resultado
 			rs = pst.executeQuery();
-			// uso da estrutura if else parar verificar se existe o contato
-			// rs.next() -> se existir um contato no banco
+
 			if (rs.next()) {
-				txtID.setText(rs.getString(1)); // 1 campo da tabela
-				txtNome.setText(rs.getString(2)); // 2campo (nome)
-				txtLogin.setText(rs.getString(3));// 3 campo (Login)
-				txtSenha.setText(rs.getString(4)); // 4 campo (Senha)
+				txtID.setText(rs.getString(1));
+				txtNome.setText(rs.getString(2));
+				txtLogin.setText(rs.getString(3));
+				txtSenha.setText(rs.getString(4));
 				cboPerfil.setSelectedItem(rs.getString(5));
-				// validação (liberação dos botões alterar e excluir)
+
 				btnEditar.setEnabled(true);
 				btnExcluir.setEnabled(true);
 				btnPesquisar.setEnabled(false);
 
 			} else {
 
-				// se não existir um contato no banco
 				JOptionPane.showMessageDialog(null, "Usuarío Inexistente");
 				btnAdicionar.setEnabled(true);
 				btnPesquisar.setEnabled(false);
@@ -342,9 +325,6 @@ public class Usuarios extends JDialog {
 		}
 	}
 
-	/**
-	 * Limpar campos
-	 */
 	private void limparcampos() {
 		txtID.setText(null);
 		txtNome.setText(null);
@@ -358,14 +338,10 @@ public class Usuarios extends JDialog {
 		cboPerfil.setSelectedItem("");
 		txtSenha.setBackground(Color.white);
 		chckSenha.setSelected(false);
-	}// fim do método limpar campos()
+	}
 
-	/**
-	 * Método pra adicionar um novo contato
-	 */
 	private void adicionar() {
-		// System.out.println("teste");
-		// Validação de campos obrigatóriios
+
 		if (txtNome.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Preencha o nome do Usuário");
 			txtNome.requestFocus();
@@ -379,26 +355,23 @@ public class Usuarios extends JDialog {
 			JOptionPane.showMessageDialog(null, "Preencha o Perfil do Usuário");
 		} else {
 
-			// lógica pricipal
-			// CRUD Creat
 			String create = "insert into usuarios (nome,login,senha,perfil) values (?,?,md5(?),?)";
-			// tratamento com exceções
+
 			try {
-				// abrir conexão
+
 				con = dao.conectar();
-				// preparar a execução da query(instrução sql - CRUD Create)
+
 				pst = con.prepareStatement(create);
 				pst.setString(1, txtNome.getText());
 				pst.setString(2, txtLogin.getText());
 				pst.setString(3, txtSenha.getText());
 				pst.setString(4, cboPerfil.getSelectedItem().toString());
-				// executar a query(instruição sql (CRUD - Creat))
+
 				pst.executeUpdate();
-				// Confirmar
+
 				JOptionPane.showMessageDialog(null, "Usuário adicionado");
-				// limpar campos
 				limparcampos();
-				// fechar a conexão
+
 			} catch (Exception e) {
 				System.out.println(e);
 			}
@@ -407,9 +380,7 @@ public class Usuarios extends JDialog {
 	}
 
 	private void editarUsuario() {
-		// System.out.println("teste do Método");
 
-		// Validação dos campos obrigátorios
 		if (txtNome.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Digite o nome");
 			txtNome.requestFocus();
@@ -421,30 +392,26 @@ public class Usuarios extends JDialog {
 			txtSenha.requestFocus();
 		} else {
 
-			// Lógica principal
-			// CRUD - Update
 			String update = "update usuarios set nome=?, login=?, senha=md5(?), perfil=? where id=?";
-			// tratamentos de exceçoes
+
 			try {
 
-				// como a conexão
 				con = dao.conectar();
-				// preparar a query (instrução sql)
 				pst = con.prepareStatement(update);
 				pst.setString(1, txtNome.getText());
 				pst.setString(2, txtLogin.getText());
 				pst.setString(3, txtSenha.getText());
 				pst.setString(4, cboPerfil.getSelectedItem().toString());
 				pst.setString(5, txtID.getText());
-				// executar a query
+
 				pst.executeUpdate();
-				// confirmar para o usuário
+
 				JOptionPane.showMessageDialog(null, "Dados do Usuário editados com sucesso");
-				// limpar campos
+
 				limparcampos();
 				txtSenha.setBackground(Color.white);
 				chckSenha.setSelected(false);
-				// fechar conexão
+
 				con.close();
 
 			} catch (Exception e) {
@@ -454,9 +421,7 @@ public class Usuarios extends JDialog {
 	}
 
 	private void editarUsuarioExcetosenha() {
-		// System.out.println("teste do Método");
 
-		// Validação dos campos obrigátorios
 		if (txtNome.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Digite o nome");
 			txtNome.requestFocus();
@@ -468,27 +433,24 @@ public class Usuarios extends JDialog {
 			txtSenha.requestFocus();
 		} else {
 
-			// Lógica principal
-			// CRUD - Update
 			String update = "update usuarios set nome=?, login=?, perfil = ? where id=?";
-			// tratamentos de exceçoes
+
 			try {
 
-				// como a conexão
 				con = dao.conectar();
-				// preparar a query (instrução sql)
+
 				pst = con.prepareStatement(update);
 				pst.setString(1, txtNome.getText());
 				pst.setString(2, txtLogin.getText());
 				pst.setString(3, cboPerfil.getSelectedItem().toString());
 				pst.setString(4, txtID.getText());
-				// executar a query
+
 				pst.executeUpdate();
-				// confirmar para o usuário
+
 				JOptionPane.showMessageDialog(null, "Dados do Usuário editados com sucesso");
-				// limpar campos
+
 				limparcampos();
-				// fechar conexão
+
 				con.close();
 
 			} catch (Exception e) {
@@ -496,32 +458,29 @@ public class Usuarios extends JDialog {
 			}
 		}
 	}
-	// Método usado para excluir um contato
 
 	private void excluirUsuarios() {
-		// System.out.println("Teste do botão excluir");
-		// validação de exclusão - a variável confima captura a opção escolhida
 
 		int confirma = JOptionPane.showConfirmDialog(null, "Confirma a exclusão deste usuarios ?", "Atenção !",
 				JOptionPane.YES_NO_OPTION);
 		if (confirma == JOptionPane.YES_NO_OPTION) {
-			// CRUD - Delete
+
 			String delete = "delete from usuarios where id=?";
-			// tratamento de exceções
+
 			try {
-				// abrir a conexão
+
 				con = dao.conectar();
-				// preparar a query (instrução sql)
+
 				pst = con.prepareStatement(delete);
-				// substituir a ? pelo id do contato
+
 				pst.setString(1, txtID.getText());
-				// executar a query
+
 				pst.executeUpdate();
-				// limpar Campos
+
 				limparcampos();
-				// exibir uma mensagem ao usuário
+
 				JOptionPane.showMessageDialog(null, " usuario excluido");
-				// fechar a conexão
+
 				con.close();
 			} catch (Exception e) {
 				System.out.println(e);
@@ -530,29 +489,26 @@ public class Usuarios extends JDialog {
 	}
 
 	private void listarUsuarios() {
-		// System.out.println("Teste");
-		// a linha abaixo cria um objeto usando como referência um vetor dinâmico, este
-		// obejto irá temporariamente armazenar os dados
+
 		DefaultListModel<String> modelo = new DefaultListModel<>();
-		// setar o model (vetor na lista)
+
 		listUsers.setModel(modelo);
-		// Query (instrução sql)
+
 		String readLista = "select* from usuarios where nome like '" + txtNome.getText() + "%'" + "order by nome";
 		try {
-			// abri conexão
+
 			con = dao.conectar();
 
 			pst = con.prepareStatement(readLista);
 
 			rs = pst.executeQuery();
 
-			// uso do while para trazer os usuários enquanto exisitr
 			while (rs.next()) {
-				// mostrar a lista
+
 				scrollPaneUsers.setVisible(true);
-				// adicionar os usuarios no vetor -> lista
+
 				modelo.addElement(rs.getString(2));
-				// esconder a lista se nenhuma letra for digitada
+
 				if (txtNome.getText().isEmpty()) {
 					scrollPaneUsers.setVisible(false);
 				}
@@ -563,16 +519,11 @@ public class Usuarios extends JDialog {
 		}
 	}
 
-	/**
-	 * Método usado para buscar usuário pela lista
-	 */
 	private void buscarUsuarioLista() {
-		// System.out.println("teste");
-		// variável que captura o indice da linha da lista
+
 		int linha = listUsers.getSelectedIndex();
 		if (linha >= 0) {
-			// Query (instrução sql)
-			// limit (0,1) -> seleciona o indice 0 e 1 usuário da lista
+
 			String readListaUsuario = "select * from usuarios where nome like '" + txtNome.getText() + "%'"
 					+ "order by nome";
 			try {
@@ -580,15 +531,15 @@ public class Usuarios extends JDialog {
 				pst = con.prepareStatement(readListaUsuario);
 				rs = pst.executeQuery();
 				if (rs.next()) {
-					// esconder a lista
+
 					scrollPaneUsers.setVisible(false);
-					// setar campos
+
 					txtID.setText(rs.getString(1));
 					txtNome.setText(rs.getString(2));
 					txtLogin.setText(rs.getString(3));
 					txtSenha.setText(rs.getString(4));
 					cboPerfil.setSelectedItem(rs.getString(5));
-					
+
 					btnEditar.setEnabled(true);
 					btnExcluir.setEnabled(true);
 				}
@@ -597,9 +548,9 @@ public class Usuarios extends JDialog {
 				System.out.println(e);
 			}
 		} else {
-			// se não existir no banco um usuário da lista
+
 			scrollPaneUsers.setVisible(false);
-		
+
 		}
 	}
 }

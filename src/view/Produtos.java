@@ -56,10 +56,8 @@ public class Produtos extends JDialog {
 	private PreparedStatement pst;
 	private ResultSet rs;
 
-	// instanciar objeto para o fluxo de bytes
 	private FileInputStream fis;
 
-	// variavel global para armazenar o tamanho da imagem(bytes)
 	private int tamanho;
 
 	private final JPanel contentPanel = new JPanel();
@@ -95,9 +93,6 @@ public class Produtos extends JDialog {
 	private JComboBox cboUN;
 	private JLabel lblNewLabel;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		try {
 			Produtos dialog = new Produtos();
@@ -108,9 +103,6 @@ public class Produtos extends JDialog {
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public Produtos() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Produtos.class.getResource("/img/Produtos.png")));
 		setTitle("Produtos");
@@ -126,12 +118,12 @@ public class Produtos extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		
+
 		scrollPaneProdutos = new JScrollPane();
 		scrollPaneProdutos.setVisible(false);
 		scrollPaneProdutos.setBounds(12, 46, 299, 23);
 		contentPanel.add(scrollPaneProdutos);
-		
+
 		listProdutos = new JList();
 		listProdutos.addMouseListener(new MouseAdapter() {
 			@Override
@@ -142,7 +134,8 @@ public class Produtos extends JDialog {
 		scrollPaneProdutos.setViewportView(listProdutos);
 
 		listFornecedores = new JPanel();
-		listFornecedores.setBorder(new TitledBorder(null, "Fornecedor", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		listFornecedores
+				.setBorder(new TitledBorder(null, "Fornecedor", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		listFornecedores.setBounds(509, 102, 233, 65);
 		contentPanel.add(listFornecedores);
 		listFornecedores.setLayout(null);
@@ -410,7 +403,7 @@ public class Produtos extends JDialog {
 		});
 		txtBarcode.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 buscarBarCode();
+				buscarBarCode();
 			}
 		});
 		txtBarcode.setBounds(572, 71, 142, 20);
@@ -493,52 +486,47 @@ public class Produtos extends JDialog {
 		btnPesquisar = new JButton("Buscar");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				buscarProdutos(); 
+				buscarProdutos();
 			}
 		});
 		btnPesquisar.setBounds(615, 23, 89, 23);
 		contentPanel.add(btnPesquisar);
-		
+
 		cboUN = new JComboBox();
-		cboUN.setModel(new DefaultComboBoxModel(new String[] {" ", "UN", "CX ", "PC ", "KG", "M"}));
+		cboUN.setModel(new DefaultComboBoxModel(new String[] { " ", "UN", "CX ", "PC ", "KG", "M" }));
 		cboUN.setBounds(313, 304, 67, 30);
 		contentPanel.add(cboUN);
-		
+
 		lblNewLabel = new JLabel("\r\n");
 		lblNewLabel.setOpaque(true);
 		lblNewLabel.setBackground(new Color(255, 128, 255));
 		lblNewLabel.setBounds(1, 485, 784, 75);
 		contentPanel.add(lblNewLabel);
 
-
-		
-	}// final construtor
+	}
 
 	private void listarFornecedor() {
-		// System.out.println("Teste");
-		// a linha abaixo cria um objeto usando como referência um vetor dinâmico, este
-		// obejto irá temporariamente armazenar os dados
+
 		DefaultListModel<String> modelo = new DefaultListModel<>();
-		// setar o model (vetor na lista)
+
 		listFornecedor.setModel(modelo);
-		// Query (instrução sql)
+
 		String readLista = "select* from fornecedor where razao like '" + txtFornecedor.getText() + "%'"
 				+ "order by razao ";
 		try {
-			// abri conexão
+
 			con = dao.conectar();
 
 			pst = con.prepareStatement(readLista);
 
 			rs = pst.executeQuery();
 
-			// uso do while para trazer os usuários enquanto exisitr
 			while (rs.next()) {
-				// mostrar a lista
+
 				scrollPaneFornecedor.setVisible(true);
-				// adicionar os usuarios no vetor -> lista
+
 				modelo.addElement(rs.getString(2));
-				// esconder a lista se nenhuma letra for digitada
+
 				if (txtFornecedor.getText().isEmpty()) {
 					scrollPaneFornecedor.setVisible(false);
 				}
@@ -550,22 +538,20 @@ public class Produtos extends JDialog {
 	}
 
 	private void buscarFornecedor() {
-		// System.out.println("teste");
-		// variável que captura o indice da linha da lista
+
 		int linha = listFornecedor.getSelectedIndex();
 		if (linha >= 0) {
-			// Query (instrução sql)
-			// limit (0,1) -> seleciona o indice 0 e 1 usuário da lista
-			String readListafornecedor = "select * from fornecedor where razao like '" + txtFornecedor.getText()
-					+ "%'" + "order by razao";
+
+			String readListafornecedor = "select * from fornecedor where razao like '" + txtFornecedor.getText() + "%'"
+					+ "order by razao";
 			try {
 				con = dao.conectar();
 				pst = con.prepareStatement(readListafornecedor);
 				rs = pst.executeQuery();
 				if (rs.next()) {
-					// esconder a lista
+
 					scrollPaneFornecedor.setVisible(false);
-					// setar campos
+
 					txtIDFornecedor.setText(rs.getString(1));
 					txtFornecedor.setText(rs.getString(2));
 
@@ -575,7 +561,7 @@ public class Produtos extends JDialog {
 				System.out.println(e);
 			}
 		} else {
-			// se não existir no banco um usuário da lista
+
 			scrollPaneFornecedor.setVisible(false);
 		}
 	}
@@ -605,8 +591,7 @@ public class Produtos extends JDialog {
 	}
 
 	private void adicionar() {
-		// System.out.println("teste");
-		// Validação de campos obrigatóriios
+
 		if (txtProduto.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Preencha o valor do produto");
 			txtProduto.requestFocus();
@@ -625,24 +610,22 @@ public class Produtos extends JDialog {
 		} else if (txtFornecedor.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Preencha o fornecedor do produto");
 			txtFornecedor.requestFocus();
-		} else if (dateValidade.getDate()== null) {
+		} else if (dateValidade.getDate() == null) {
 			JOptionPane.showMessageDialog(null, "Preencha o fornecedor do produto");
 		} else {
 
-			// lógica pricipal
-			// CRUD Creat
 			String create = "insert into produtos (barcode,produto,lote,descricao,foto,fabricante,dataval,estoque,estoquemin,unidade,localarm,custo,lucro,idfor) value ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
-			// tratamento com exceções
+
 			try {
-				// abrir conexão
+
 				con = dao.conectar();
-				// preparar a execução da query(instrução sql - CRUD Create)
+
 				pst = con.prepareStatement(create);
 				pst.setString(1, txtBarcode.getText());
 				pst.setString(2, txtProduto.getText());
 				pst.setString(3, txtLote.getText());
 				pst.setString(4, txtDescricao.getText());
-				pst.setBlob(5,fis, tamanho);
+				pst.setBlob(5, fis, tamanho);
 				pst.setString(6, txtFabricante.getText());
 				SimpleDateFormat formatador = new SimpleDateFormat("yyyyMMdd");
 				String dataFormatada = formatador.format(dateValidade.getDate());
@@ -655,15 +638,15 @@ public class Produtos extends JDialog {
 				pst.setString(13, txtLucro.getText());
 				pst.setString(14, txtIDFornecedor.getText());
 
-				// executar a query(instruição sql (CRUD - Creat))
 				pst.executeUpdate();
-				// Confirmar
+
 				JOptionPane.showMessageDialog(null, "Produto adicionado");
 				limparCampos();
-				// fechar a conexão
+
 				con.close();
-			}  catch (java.sql.SQLIntegrityConstraintViolationException e1) {
-				JOptionPane.showMessageDialog(null, "Usuário não adicionado.\nEste Código de Barras já está sendo utilizado.");
+			} catch (java.sql.SQLIntegrityConstraintViolationException e1) {
+				JOptionPane.showMessageDialog(null,
+						"Usuário não adicionado.\nEste Código de Barras já está sendo utilizado.");
 				txtBarcode.setText(null);
 				txtBarcode.requestFocus();
 			} catch (Exception e2) {
@@ -673,29 +656,27 @@ public class Produtos extends JDialog {
 	}
 
 	private void excluirProduto() {
-		// System.out.println("Teste do botão excluir");
-		// validação de exclusão - a variável confima captura a opção escolhida
 
 		int confirma = JOptionPane.showConfirmDialog(null, "Confirma a exclusão deste fornecedor ?", "Atenção !",
 				JOptionPane.YES_NO_OPTION);
 		if (confirma == JOptionPane.YES_NO_OPTION) {
-			// CRUD - Delete
+
 			String delete = "delete from produtos where produto=?";
-			// tratamento de exceções
+
 			try {
-				// abrir a conexão
+
 				con = dao.conectar();
-				// preparar a query (instrução sql)
+
 				pst = con.prepareStatement(delete);
-				// substituir a ? pelo id do contato
+
 				pst.setString(1, txtProduto.getText());
-				// executar a query
+
 				pst.executeUpdate();
-				// limpar Campos
+
 				limparCampos();
-				// exibir uma mensagem ao usuário
+
 				JOptionPane.showMessageDialog(null, " Produto excluido");
-				// fechar a conexão
+
 				con.close();
 			} catch (Exception e) {
 				System.out.println(e);
@@ -704,9 +685,7 @@ public class Produtos extends JDialog {
 	}
 
 	private void editarProduto() {
-		// System.out.println("teste do Método");
 
-		// Validação dos campos obrigátorios
 		if (txtProduto.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Digite o Brinquedo do Serviço");
 			txtProduto.requestFocus();
@@ -736,14 +715,12 @@ public class Produtos extends JDialog {
 			txtLucro.requestFocus();
 		} else {
 
-			// Lógica principal
-			// CRUD - Update
 			String update = "update produtos set produto=?,lote=?, descricao=?, fabricante=?, estoque=?, estoquemin=?, unidade=?, custo=?, lucro=?, localarm=? where codigo=?";
-			// tratamentos de exceçoes
+
 			try {
-				// como a conexão
+
 				con = dao.conectar();
-				// preparar a query (instrução sql)
+
 				pst = con.prepareStatement(update);
 				pst.setString(1, txtProduto.getText());
 				pst.setString(2, txtLote.getText());
@@ -757,13 +734,12 @@ public class Produtos extends JDialog {
 				pst.setString(10, txtLocal.getText());
 				pst.setString(11, txtCodigo.getText());
 
-				// executar a query
 				pst.executeUpdate();
-				// confirmar para o usuário
+
 				JOptionPane.showMessageDialog(null, "Dados do Produto editado com sucesso");
-				// limpar campos
+
 				limparCampos();
-				// fechar conexão
+
 				con.close();
 
 			} catch (Exception e) {
@@ -791,23 +767,20 @@ public class Produtos extends JDialog {
 		}
 	}
 
-	
 	private void buscarBarCode() {
-		// Criar uma variável com a query (instrução do banco)
+
 		String readBarCode = "select * from produtos where barcode = ?";
-		// tratamento de exceções
+
 		try {
-			// abrir a conexão
+
 			con = dao.conectar();
-			// preparar a execução da query (instrução sql - CRUD Read)
-			// O parâmetro 1 substitui a ? pelo conteúdo da caixa de texto
+
 			pst = con.prepareStatement(readBarCode);
-			// Substituir a ?(Parâmetro) pelo número da OS
+
 			pst.setString(1, txtBarcode.getText());
-			// executar a query e buscar o resultado
+
 			rs = pst.executeQuery();
-			// uso da estrutura if else para verificar se existe o contato
-			// rs.next() -> se existir um contato no banco
+
 			if (rs.next()) {
 				txtCodigo.setText(rs.getString(1));
 				txtBarcode.setText(rs.getString(2));
@@ -815,12 +788,11 @@ public class Produtos extends JDialog {
 				txtLote.setText(rs.getString(4));
 				txtDescricao.setText(rs.getNString(5));
 				txtFabricante.setText(rs.getString(7));
-				// Setar a data no JCalendar
-				// Passo 1: Receber a data do mysql
+
 				String setarDataEnt = rs.getString(8);
-				// Passo 2: Formatar a data para o JCalendar
+
 				Date dataEntrada = new SimpleDateFormat("yyyy-mm-dd").parse(setarDataEnt);
-				// Passo 3: Exibir o resultado no JCalendar
+
 				dateEntrada.setDate(dataEntrada);
 				String setarDataVali = rs.getString(9);
 				Date dataValidade = new SimpleDateFormat("yyyy-mm-dd").parse(setarDataVali);
@@ -844,39 +816,125 @@ public class Produtos extends JDialog {
 				Icon foto = new ImageIcon(icone.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(),
 						Image.SCALE_SMOOTH));
 				lblFoto.setIcon(foto);
-				// Validação (liberação dos botões)
+
 				btnEditar.setEnabled(true);
 				btnExcluir.setEnabled(true);
 				btnAdicionar.setEnabled(false);
 
 			} else {
-				// se não existir um contato no banco
+
 				JOptionPane.showMessageDialog(null, "Barcode do produto não encontrado");
-				// Validação (liberação do botão adicionar)
+
 				btnAdicionar.setEnabled(true);
 				btnExcluir.setEnabled(false);
 				btnEditar.setEnabled(false);
 			}
-			// fechar conexão (IMPORTANTE)
 			con.close();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-	}// FIM DO METODO BUSCAR
-	
+	}
+
 	private void buscarProdutos() {
 
-			// Query (instrução sql)
-			// limit (0,1) -> seleciona o indice 0 e 1 usuário da lista
-			String readCodigo = "select * from produtos inner join fornecedor on produtos.idfor = fornecedor.idfornecedores where codigo=?";
+		String readCodigo = "select * from produtos inner join fornecedor on produtos.idfor = fornecedor.idfornecedores where codigo=?";
+		try {
+			con = dao.conectar();
+			pst = con.prepareStatement(readCodigo);
+			pst.setString(1, txtCodigo.getText());
+			rs = pst.executeQuery();
+			if (rs.next()) {
+
+				txtCodigo.setText(rs.getString(1));
+				txtBarcode.setText(rs.getString(2));
+				txtProduto.setText(rs.getString(3));
+				txtLote.setText(rs.getString(4));
+				txtDescricao.setText(rs.getString(5));
+				Blob blob = (Blob) rs.getBlob(6);
+				txtFabricante.setText(rs.getString(7));
+				dateEntrada.setDate(rs.getDate(8));
+				dateValidade.setDate(rs.getDate(9));
+				txtEstoque.setText(rs.getString(10));
+				txtEstoqueMin.setText(rs.getString(11));
+				cboUN.setSelectedItem(rs.getString(12));
+				txtLocal.setText(rs.getString(13));
+				txtCusto.setText(rs.getString(14));
+				txtLucro.setText(rs.getString(15));
+				txtIDFornecedor.setText(rs.getString(16));
+
+				btnEditar.setEnabled(true);
+				btnExcluir.setEnabled(true);
+				btnAdicionar.setEnabled(false);
+
+				byte[] img = blob.getBytes(1, (int) blob.length());
+				BufferedImage imagem = null;
+
+				try {
+					imagem = ImageIO.read(new ByteArrayInputStream(img));
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+				ImageIcon icone = new ImageIcon(imagem);
+				Icon foto = new ImageIcon(icone.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(),
+						Image.SCALE_SMOOTH));
+				lblFoto.setIcon(foto);
+			} else {
+
+				JOptionPane.showMessageDialog(null, "Produto inexistente");
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+	}
+
+	private void listarProdutos() {
+
+		DefaultListModel<String> modelo = new DefaultListModel<>();
+
+		listProdutos.setModel(modelo);
+
+		String readLista = "select* from produtos where produto like '" + txtProduto.getText() + "%'"
+				+ "order by produto";
+		try {
+
+			con = dao.conectar();
+
+			pst = con.prepareStatement(readLista);
+
+			rs = pst.executeQuery();
+
+			while (rs.next()) {
+
+				scrollPaneProdutos.setVisible(true);
+
+				modelo.addElement(rs.getString(3));
+
+				if (txtProduto.getText().isEmpty()) {
+					scrollPaneProdutos.setVisible(false);
+				}
+			}
+			con.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	private void buscarProdutoLista() {
+
+		int linha = listProdutos.getSelectedIndex();
+		if (linha >= 0) {
+
+			String readListaUsuario = "select * from produtos where produto like '" + txtProduto.getText() + "%'"
+					+ "order by produto";
 			try {
 				con = dao.conectar();
-				pst = con.prepareStatement(readCodigo);
-				pst.setString(1, txtCodigo.getText());
+				pst = con.prepareStatement(readListaUsuario);
 				rs = pst.executeQuery();
 				if (rs.next()) {
-					// esconder a lista
-					// setar campos
+
+					scrollPaneProdutos.setVisible(false);
+
 					txtCodigo.setText(rs.getString(1));
 					txtBarcode.setText(rs.getString(2));
 					txtProduto.setText(rs.getString(3));
@@ -894,9 +952,9 @@ public class Produtos extends JDialog {
 					txtLucro.setText(rs.getString(15));
 					txtIDFornecedor.setText(rs.getString(16));
 
+					btnAdicionar.setEnabled(false);
 					btnEditar.setEnabled(true);
 					btnExcluir.setEnabled(true);
-					btnAdicionar.setEnabled(false);
 
 					byte[] img = blob.getBytes(1, (int) blob.length());
 					BufferedImage imagem = null;
@@ -910,115 +968,14 @@ public class Produtos extends JDialog {
 					Icon foto = new ImageIcon(icone.getImage().getScaledInstance(lblFoto.getWidth(),
 							lblFoto.getHeight(), Image.SCALE_SMOOTH));
 					lblFoto.setIcon(foto);
-				} else {
-					// se não existir um contato no banco
-					JOptionPane.showMessageDialog(null, "Produto inexistente");
 				}
+
 			} catch (Exception e) {
 				System.out.println(e);
 			}
-		
-	}
-		
-		private void listarProdutos() {
-			// System.out.println("Teste");
-			// a linha abaixo cria um objeto usando como referência um vetor dinâmico, este
-			// obejto irá temporariamente armazenar os dados
-			DefaultListModel<String> modelo = new DefaultListModel<>();
-			// setar o model (vetor na lista)
-			listProdutos.setModel(modelo);
-			// Query (instrução sql)
-			String readLista = "select* from produtos where produto like '" + txtProduto.getText() + "%'" + "order by produto";
-			try {
-				// abri conexão
-				con = dao.conectar();
+		} else {
+			scrollPaneProdutos.setVisible(false);
 
-				pst = con.prepareStatement(readLista);
-
-				rs = pst.executeQuery();
-
-				// uso do while para trazer os usuários enquanto exisitr
-				while (rs.next()) {
-					// mostrar a lista
-					scrollPaneProdutos.setVisible(true);
-					// adicionar os usuarios no vetor -> lista
-					modelo.addElement(rs.getString(3));
-					// esconder a lista se nenhuma letra for digitada
-					if (txtProduto.getText().isEmpty()) {
-						scrollPaneProdutos.setVisible(false);
-					}
-				}
-				con.close();
-			} catch (Exception e) {
-				System.out.println(e);
-			}
-		}
-		
-		/**
-		 * Método usado para buscar usuário pela lista
-		 */
-		private void buscarProdutoLista() {
-			// System.out.println("teste");
-			// variável que captura o indice da linha da lista
-			int linha = listProdutos.getSelectedIndex();
-			if (linha >= 0) {
-				// Query (instrução sql)
-				// limit (0,1) -> seleciona o indice 0 e 1 usuário da lista
-				String readListaUsuario = "select * from produtos where produto like '" + txtProduto.getText() + "%'"
-						+ "order by produto";
-				try {
-					con = dao.conectar();
-					pst = con.prepareStatement(readListaUsuario);
-					rs = pst.executeQuery();
-					if (rs.next()) {
-						// esconder a lista
-						scrollPaneProdutos.setVisible(false);
-						// setar campos
-						txtCodigo.setText(rs.getString(1));
-						txtBarcode.setText(rs.getString(2));
-						txtProduto.setText(rs.getString(3));
-						txtLote.setText(rs.getString(4));
-						txtDescricao.setText(rs.getString(5));
-						Blob blob = (Blob) rs.getBlob(6);
-						txtFabricante.setText(rs.getString(7));
-						dateEntrada.setDate(rs.getDate(8));
-						dateValidade.setDate(rs.getDate(9));
-						txtEstoque.setText(rs.getString(10));
-						txtEstoqueMin.setText(rs.getString(11));
-						cboUN.setSelectedItem(rs.getString(12));
-						txtLocal.setText(rs.getString(13));
-						txtCusto.setText(rs.getString(14));
-						txtLucro.setText(rs.getString(15));
-						txtIDFornecedor.setText(rs.getString(16));
-						
-						btnAdicionar.setEnabled(false);
-						btnEditar.setEnabled(true);
-						btnExcluir.setEnabled(true);
-						
-						byte[] img = blob.getBytes(1, (int) blob.length());
-						BufferedImage imagem = null;
-
-						try {
-							imagem = ImageIO.read(new ByteArrayInputStream(img));
-						} catch (Exception e) {
-							System.out.println(e);
-						}
-						ImageIcon icone = new ImageIcon(imagem);
-						Icon foto = new ImageIcon(icone.getImage().getScaledInstance(lblFoto.getWidth(),
-								lblFoto.getHeight(), Image.SCALE_SMOOTH));
-						lblFoto.setIcon(foto);
-					}
-					
-				
-
-				} catch (Exception e) {
-					System.out.println(e);
-				}
-			} else {
-				// se não existir no banco um usuário da lista
-				scrollPaneProdutos.setVisible(false);
-			
-			}
 		}
 	}
-
+}

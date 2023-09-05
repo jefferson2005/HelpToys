@@ -26,18 +26,13 @@ import model.DAO;
 
 public class Login extends JFrame {
 
-	// objetos JDBC
-
 	DAO dao = new DAO();
 	private Connection con;
 	private PreparedStatement pst;
 	private ResultSet rs;
-	// objeto tela pricipal
+
 	Principal principal = new Principal();
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtLogins;
@@ -45,9 +40,6 @@ public class Login extends JFrame {
 	private JLabel lblStatus;
 	private JLabel lblNewLabel;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -61,9 +53,6 @@ public class Login extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Login() {
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -125,25 +114,18 @@ public class Login extends JFrame {
 		contentPane.add(txtSenha);
 
 		getRootPane().setDefaultButton(btnAcessar);
-		
+
 		lblNewLabel = new JLabel("\r\n");
 		lblNewLabel.setOpaque(true);
 		lblNewLabel.setBackground(new Color(255, 128, 255));
 		lblNewLabel.setBounds(0, 111, 434, 51);
 		contentPane.add(lblNewLabel);
 
-	}// Fim do construtor
-
-	/**
-	 * Método para autenticar um usuário
-	 */
+	}
 
 	private void logar() {
 
-		// Criar uma variável para capturar a senha
 		String capturaSenha = new String(txtSenha.getPassword());
-
-		// validação
 
 		if (txtLogins.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Preencha o login");
@@ -153,7 +135,6 @@ public class Login extends JFrame {
 			txtSenha.requestFocus();
 		} else {
 
-			// Lógica pricipal
 			String read = "select * from usuarios where login=? and senha=md5(?)";
 			try {
 				con = dao.conectar();
@@ -162,28 +143,24 @@ public class Login extends JFrame {
 				pst.setString(2, capturaSenha);
 				rs = pst.executeQuery();
 				if (rs.next()) {
-					// capturar o perfil do usuario
-					// System.out.println(rs.getString(5));//apoio a lógica
-					// Tratamento do perfil do usuário
+
 					String perfil = rs.getString(5);
 					if (perfil.equals("admin")) {
-						// logar -> acessar a tela principal
+
 						principal.setVisible(true);
-						// setar a tabela da tela principal com o nome do usuario
+
 						principal.lblUsuario.setText(rs.getString(2));
-						// habilitar os botões
 						principal.btnRelatorio.setEnabled(true);
 						principal.bntUsuarios.setEnabled(true);
-						// mudar a cor do rodapé
+
 						principal.lblRodape.setBackground(Color.MAGENTA);
-						// fechar a tela de login(está tela)
+
 						this.dispose();
-					} else {// perfil for diferente de admin
-							// logar -> acessar a tela principal
+					} else {
 						principal.setVisible(true);
-						// setar a label da tela principal com o nome do usuario
+
 						principal.lblUsuario.setText(rs.getString(2));
-						// fechar a tela de login(estela tela)
+
 						this.dispose();
 					}
 				} else {
@@ -198,19 +175,19 @@ public class Login extends JFrame {
 
 	private void status() {
 		try {
-			// abrir a conexão
+
 			con = dao.conectar();
 			if (con == null) {
-				// System.out.println("Erro de conexão");
+
 				lblStatus.setIcon(new ImageIcon(Usuarios.class.getResource("/img/9069340_database_fail_icon.png")));
 			} else {
-				// System.out.println("Banco conectado");
+
 				lblStatus.setIcon(new ImageIcon(Usuarios.class.getResource("/img/9069499_database_success_icon.png")));
 			}
-			// NUNCA esquecer de fechar a conexão
+
 			con.close();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-	}// Fim do método status()
-}// Fim do código
+	}
+}
