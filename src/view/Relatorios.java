@@ -303,7 +303,7 @@ public class Relatorios extends JDialog {
 
 			String readProdutos = "select codigo as código,produto,date_format(dataval, '%d/%m/%Y') as validade,\n"
 					+ "date_format(dataent, '%d/%m/%Y') as entrada,\n" + "estoque, estoquemin as estoque_mínimo \n"
-					+ "from produtos where dataval < dataent";
+					+ "from produtos where dataval < dataent or estoque<estoquemin ";
 			try {
 
 				con = dao.conectar();
